@@ -49,9 +49,9 @@ body{
     position:absolute;
 
     left:25%;
-    bottom:15%;
+    bottom:50%;
 
-    width:50%;
+    width:30%;
     height:25%;
 
     cursor:pointer;
@@ -658,7 +658,7 @@ body{
     position:absolute;
 
     left:47%;
-    top:75%;
+    top:80%;
 
     width:8%;
     height:8%;
@@ -667,6 +667,56 @@ body{
     background:transparent;
 
     cursor:pointer;
+}
+
+#mochilaHover{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:.25s;
+    pointer-events:none;
+    display:none;
+}
+
+#mochilaBtn{
+    position:absolute;
+    left:47%;
+    top:35%;
+    width:12%;
+    height:30%;
+    padding:0;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    display:none;
+}
+
+#tijerasHover{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:.25s;
+    pointer-events:none;
+    display:none;
+}
+
+#tijerasBtn{
+    position:absolute;
+    left:50%;
+    top:16%;
+    width:7%;
+    height:17%;
+    padding:0;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    display:none;
 }
 
 
@@ -1076,6 +1126,17 @@ cursor:pointer;
 z-index:1000;
 }
 
+#checkBtnOverlay{
+position:absolute;
+top:630px;
+left:60px;
+width:240px;
+height:55px;
+background:white;
+z-index:1001;
+pointer-events:none;
+}
+
 .mensajeNormal{
 position:absolute;
 top:180px;
@@ -1296,7 +1357,21 @@ alt="Fondo">
         src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-ventana-telefono-hover.png"
     >
 
+    <img
+        id="mochilaHover"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-ventana-mochila-hover.png"
+        alt=""
+    >
+
+    <img
+        id="tijerasHover"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-tijeras-ventana-hover.png"
+        alt=""
+    >
+
     <div id="telefonoBtn"></div>
+    <button id="mochilaBtn" aria-label="Revisar la mochila"></button>
+    <button id="tijerasBtn" aria-label="Recoger las tijeras"></button>
 
 </div>
 
@@ -1376,6 +1451,8 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
 </div>
 
 <button id="checkBtn"></button>
+
+<div id="checkBtnOverlay" class="hidden" aria-hidden="true"></div>
 
 <div id="feedback" class="hidden">
 
@@ -1466,6 +1543,10 @@ let estado = {
     llave:false,
 
     telefono:false,
+
+    mochila:false,
+
+    tijeras:false,
 
     codigo479:false
 
@@ -1682,6 +1763,18 @@ document.getElementById("telefonoBtn");
 const telefonoHover =
 document.getElementById("telefonoHover");
 
+const tijerasBtn =
+document.getElementById("tijerasBtn");
+
+const mochilaBtn =
+document.getElementById("mochilaBtn");
+
+const mochilaHover =
+document.getElementById("mochilaHover");
+
+const tijerasHover =
+document.getElementById("tijerasHover");
+
 telefonoBtn.addEventListener(
 "mouseenter",
 ()=>{
@@ -1704,6 +1797,70 @@ telefonoBtn.addEventListener(
     document
     .getElementById("acertijoTelefono")
     .style.display = "flex";
+});
+
+tijerasBtn.addEventListener("mouseenter",()=>{
+
+    tijerasHover.style.opacity="1";
+
+});
+
+tijerasBtn.addEventListener("mouseleave",()=>{
+
+    tijerasHover.style.opacity="0";
+
+});
+
+mochilaBtn.addEventListener("mouseenter",()=>{
+
+    mochilaHover.style.opacity="1";
+
+});
+
+mochilaBtn.addEventListener("mouseleave",()=>{
+
+    mochilaHover.style.opacity="0";
+
+});
+
+mochilaBtn.addEventListener("click",()=>{
+
+    if(!estado.telefono || estado.mochila || estado.tijeras){
+        return;
+    }
+
+    estado.mochila = true;
+    document.getElementById("fondoCasilleros").src =
+        "Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-tijeras-ventana.png";
+
+    mochilaHover.style.opacity="0";
+    mochilaHover.style.display="none";
+    mochilaBtn.style.display="none";
+    tijerasHover.style.display="block";
+    tijerasBtn.style.display="block";
+
+});
+
+tijerasBtn.addEventListener("click",()=>{
+
+    if(!estado.mochila || estado.tijeras){
+        return;
+    }
+
+    estado.tijeras = true;
+    agregarInventario(
+        "Assets_scaperoom/Bocetos/Fondos/Habitacion1/tijeras-inventario.png"
+    );
+
+    tijerasHover.style.opacity="0";
+    tijerasHover.style.display="none";
+    tijerasBtn.style.display="none";
+    mochilaHover.style.opacity="0";
+    mochilaHover.style.display="none";
+    mochilaBtn.style.display="none";
+    document.getElementById("fondoCasilleros").src =
+        "Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-ventana-telefono.png";
+
 });
 
 document
@@ -2188,7 +2345,14 @@ redFlags.forEach(flag=>{
     flag.classList.add("reveal");
 });
 
+estado.telefono = true;
+document.getElementById("fondoCasilleros").src =
+    "Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-ventana-telefono.png";
+mochilaHover.style.display="block";
+mochilaBtn.style.display="block";
+
 document.getElementById("feedback").classList.remove("hidden");
+document.getElementById("checkBtnOverlay").classList.remove("hidden");
 
 document.getElementById("feedbackText").innerHTML = `
 <h3>✅ Explicación de las red flags</h3>
