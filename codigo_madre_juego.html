@@ -1128,10 +1128,10 @@ z-index:1000;
 
 #checkBtnOverlay{
 position:absolute;
-top:630px;
-left:60px;
-width:240px;
-height:55px;
+top:610px;
+left:20px;
+width:320px;
+height:80px;
 background:white;
 z-index:1001;
 pointer-events:none;
@@ -2306,6 +2306,10 @@ phrase.classList.toggle("selected");
 document.getElementById("checkBtn")
 .addEventListener("click",()=>{
 
+const checkBtn = document.getElementById("checkBtn");
+checkBtn.disabled = true;
+checkBtn.style.opacity = "0.6";
+
 const selected =
 document.querySelectorAll(".phrase.selected");
 
@@ -2334,6 +2338,9 @@ setTimeout(()=>{
 
 document.getElementById("errorRedFlags")
 .classList.add("hidden");
+
+checkBtn.disabled = false;
+checkBtn.style.opacity = "0.5";
 
 },3000);
 
@@ -2387,9 +2394,6 @@ Trasladar la comunicación a canales privados reduce la transparencia y dificult
 
 
 `;
-
-document.getElementById("checkBtn").disabled=true;
-document.getElementById("checkBtn").style.opacity="0.6";
 
 });
 
