@@ -7,38 +7,36 @@
 
 <style>
 body{
-    font-family:Arial, sans-serif;
-    background:#111827;
-    color:white;
-    text-align:center;
-    margin:0;
-    padding:20px;
-}
-
-#instructions{
-    max-width:800px;
-    margin:0 auto 20px;
-    padding:15px;
-    background:#1f2937;
-    border:2px solid #374151;
-    border-radius:12px;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3.png");
+    background-size:80%;
+    background-repeat:no-repeat;
+    background-position:top;
 }
 
 #status{
     font-size:20px;
     margin-bottom:15px;
+    z-index:10
 }
 
 #board{
+    position:absolute;
+
+    left:590px;
+    top:143px;
+    
+    z-index:10;
+
     display:grid;
-    grid-template-columns:repeat(6,70px);
-    gap:5px;
-    justify-content:center;
+    grid-template-columns:repeat(6,80px);
+    row-gap:17px;      /* arriba-abajo */
+    column-gap:3px;    /* izquierda-derecha */
+    
 }
 
 .cell{
-    width:70px;
-    height:70px;
+    width:65px;
+    height:65px;
     background:#1f2937;
     border:2px solid #374151;
     border-radius:8px;
@@ -70,24 +68,119 @@ button:hover{
 svg{
     pointer-events:none;
 }
+
+#hotspotReiniciar{
+    position:absolute;
+    left:700px;
+    top:660px;
+    width:270px;
+    height:50px;
+    cursor:pointer;
+    background:transparent;
+}
+
+#gameContainer{
+    width:1920px;
+    height:1080px;
+
+    background-image:url("fondo.png");
+    background-size:100% 100%;
+    background-repeat:no-repeat;
+
+    margin:0 auto;
+
+    position:relative;
+}
+
+#status{
+    position:absolute;
+
+    left:640px;
+    top:100px;
+
+    width:400px;
+
+    text-align:center;
+
+    font-size:20px;
+
+    color:black;
+}
+
+#pantallaDerrota{
+    display:none;
+
+    position:fixed;
+
+    right:0;
+    top:0;
+
+    width:100vw;
+    height:100vh;
+
+    z-index:5;
+
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-mensaje-perdiste.png");
+    background-size:79%;
+    background-position:52% top;
+    background-repeat:no-repeat;
+    background-color:white;
+}
+
+#btnContinuar{
+    position:absolute;
+
+    left:700px;
+    top:650px;
+
+    width:250px;
+    height:70px;
+
+    cursor:pointer;
+    z-index:51
+}
+
+.hover-reiniciar{
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-perdiste-hover.png") !important;
+}
+
+.ficha{
+    width:55px;
+    height:55px;
+
+    object-fit:contain;
+
+    pointer-events:none;
+}
+
+.hover-reiniciar-juego{
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-hover.png") !important;
+}
+
 </style>
 </head>
 <body>
+<div id="gameContainer">
 
-<div id="instructions">
-    🎯 Consigue <strong class="___1qwroh2 fl43uef f19n0e5" data-lexical-text="true">4 fichas seguidas</strong>
-    en horizontal, vertical o diagonal para ganar.
+    <div
+    id="hotspotReiniciar"
+    onclick="location.reload()"
+    onmouseenter="document.body.classList.add('hover-reiniciar-juego')"
+    onmouseleave="document.body.classList.remove('hover-reiniciar-juego')">
 </div>
 
-<div id="status">
-    Nivel 1 - Tu turno
+
+    <div id="status">
+        Nivel 1 - Tu turno
+    </div>
+
+    <div id="board"></div>
+
+    <div id="pantallaDerrota">
+        <div id="btnContinuar"></div>
+    </div>
+
 </div>
-
-<div id="board"></div>
-
-<button onclick="location.reload()">
-    Reiniciar partida
-</button>
 
 <script>
 
@@ -164,48 +257,18 @@ function placeMark(index,mark){
     if(mark === "X"){
 
         cell.innerHTML = `
-        <svg width="42" height="42" viewBox="0 0 64 64">
-            <circle cx="32" cy="10" r="7" fill="#F3F4F6"/>
-            <path d="
-                M32 19
-                L20 42
-                L28 42
-                L28 58
-                L36 58
-                L36 42
-                L44 42
-                Z"
-                fill="#F3F4F6"/>
-            <rect x="18" y="22" width="5" height="16" fill="#F3F4F6"/>
-            <rect x="41" y="22" width="5" height="16" fill="#F3F4F6"/>
-        </svg>`;
-    }
-    else{
+            <img
+                src="../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/icono-alumna.png"
+                class="ficha">
+        `;
+
+    }else{
 
         cell.innerHTML = `
-        <svg width="42" height="42" viewBox="0 0 64 64">
-            <circle cx="32" cy="10" r="7" fill="#F3F4F6"/>
-
-            <rect x="24" y="20"
-                  width="16" height="22"
-                  fill="#F3F4F6"/>
-
-            <rect x="25" y="42"
-                  width="5" height="16"
-                  fill="#F3F4F6"/>
-
-            <rect x="34" y="42"
-                  width="5" height="16"
-                  fill="#F3F4F6"/>
-
-            <rect x="16" y="22"
-                  width="8" height="5"
-                  fill="#F3F4F6"/>
-
-            <rect x="40" y="22"
-                  width="8" height="5"
-                  fill="#F3F4F6"/>
-        </svg>`;
+            <img
+                src="../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/icono-profe.png"
+                class="ficha">
+        `;
     }
 }
 
@@ -241,7 +304,7 @@ function cpuTurn(){
 
     if(level === 3){
 
-        gameOver = "pending";
+        
 
     }else{
 
@@ -273,27 +336,14 @@ function cpuTurn(){
             },500);
 }else{
 
-    if(gameOver === "pending"){
+   if(level === 3){
 
-        gameOver = true;
+    setTimeout(() => {
+        loseScreen();
+    }, 500);
 
-        statusElement.innerHTML = `
-            <div style="color:#ff5555;font-size:28px;font-weight:bold;">
-                Has perdido
-            </div>
-
-            <div style="font-size:90px;margin-top:10px;">
-                🗝️
-            </div>
-
-            <div style="font-size:20px;">
-                Premio de consolación:
-                Llave misteriosa
-            </div>
-        `;
-
-        return;
-    }
+    return;
+}
 
     playerTurn = true;
 
@@ -414,7 +464,38 @@ function winScreen(){
     `;
 }
 
+
+function loseScreen(){
+
+    gameOver = true;
+    document.getElementById("status").style.display = "none";
+    document.body.style.backgroundColor = "";
+    document.getElementById("pantallaDerrota")
+        .style.display = "block";
+
+    const btn = document.getElementById("btnContinuar");
+    
+    if(btn){
+
+    btn.onmouseenter = () => {
+        document.getElementById("pantallaDerrota")
+            .style.backgroundImage =
+            'url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-perdiste-hover.png")';
+    };
+
+    btn.onmouseleave = () => {
+        document.getElementById("pantallaDerrota")
+            .style.backgroundImage =
+            'url("../Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-mensaje-perdiste.png")';
+    };
+
+    btn.onclick = () => {
+        location.reload();
+    };
+}
+}
 createBoard();
+
 </script>
 
 </body>

@@ -104,18 +104,11 @@ body{
 
     top:50%;
 
-    transform:translateY(-50%);
+    background:none;
 
-    width:70px;
-    height:70px;
+    border:none;
 
-    background:rgba(0,0,0,.7);
-
-    border:2px solid white;
-
-    color:white;
-
-    font-size:30px;
+    padding:0;
 
     cursor:pointer;
 
@@ -123,11 +116,27 @@ body{
 }
 
 #izq{
+
     left:20px;
+
+    transform:translateY(-50%);
 }
 
 #der{
+
     right:20px;
+
+    transform:translateY(-50%);
+}
+
+#imgIzq,
+#imgDer{
+
+    width:70px;
+
+    height:auto;
+
+    display:block;
 }
 
 #vistaCasilleros{
@@ -537,16 +546,23 @@ body{
 
     right:20px;
 
-    width:50px;
-    height:50px;
+    background:none;
 
-    font-size:28px;
+    border:none;
 
-    font-weight:bold;
+    padding:0;
 
     z-index:30001;
 
     cursor:pointer;
+}
+
+#imgInventario{
+
+    width:50px;
+    height:auto;
+
+    display:block;
 }
 
 #menuInicio{
@@ -641,14 +657,14 @@ body{
 #telefonoBtn{
     position:absolute;
 
-    left:45%;
+    left:47%;
     top:75%;
 
     width:8%;
     height:8%;
 
-    border:3px solid red;
-    background:rgba(255,0,0,.3);
+    border:none;
+    background:transparent;
 
     cursor:pointer;
 }
@@ -1091,6 +1107,41 @@ font-weight:bold;
 z-index:99999;
 }
 
+.imgVolver{
+
+    width:80px;
+
+    height:auto;
+
+    display:block;
+}
+
+#volverCasilleros .imgVolver{
+
+    width:90px;
+
+}
+
+#volverAcertijo1,
+#volverCasilleros,
+#volverTelefono{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    background:none;
+
+    border:none;
+
+    padding:0;
+
+    cursor:pointer;
+
+    z-index:9999;
+}
+
 </style>
 </head>
 
@@ -1177,8 +1228,14 @@ z-index:99999;
 <div id="acertijo1">
 
     <button id="volverAcertijo1">
-        ←
-    </button>
+
+    <img
+        class="imgVolver"
+        src="Assets_scaperoom/UI/Botones/boton-regresar.png"
+        alt="Volver"
+    >
+
+</button>
 
     <div id="gameContainer">
 
@@ -1220,8 +1277,14 @@ alt="Fondo">
 <div id="vistaCasilleros">
 
     <button id="volverCasilleros">
-        ←
-    </button>
+
+    <img
+        class="imgVolver"
+        src="Assets_scaperoom/UI/Botones/boton-regresar.png"
+        alt="Volver"
+    >
+
+</button>
 
     <img
         id="fondoCasilleros"
@@ -1243,9 +1306,15 @@ alt="Fondo">
 ⚠️ Detectaste menos del 50% de las red flags. Inténtalo nuevamente.
 </div> 
 
-    <button id="volverTelefono">
-    ←
-</button>
+  <button id="volverTelefono">
+
+    <img
+        class="imgVolver"
+        src="Assets_scaperoom/UI/Botones/boton-regresar.png"
+        alt="Volver"
+    >
+
+    </button>
 
     <div class="phone">
 <div class="screen">
@@ -1339,10 +1408,35 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
 </div> 
 
 <!-- FLECHAS -->
-<button id="izq">◀</button>
-<button id="der">▶</button>
+<button id="izq">
 
-<button id="btnInventario">▼</button>
+    <img
+        id="imgIzq"
+        src="Assets_scaperoom/UI/Botones/flecha-izquierda-negra.png"
+        alt="Izquierda"
+    >
+
+</button>
+
+<button id="der">
+
+    <img
+        id="imgDer"
+        src="Assets_scaperoom/UI/Botones/flecha-derecha-negra.png"
+        alt="Derecha"
+    >
+
+</button>
+
+<button id="btnInventario">
+
+    <img
+        id="imgInventario"
+        src="Assets_scaperoom/UI/Botones/flecha-abajo-blanco.png"
+        alt="Inventario"
+    >
+
+</button>
 
 <div id="inventario">
 
@@ -1962,8 +2056,8 @@ document
         inv.style.bottom = "-120px";
 
         document
-        .getElementById("btnInventario")
-        .textContent = "▲";
+        .getElementById("imgInventario")
+        .src ="Assets_scaperoom/UI/Botones/flecha-arriba-blanco.png";
 
         inventarioVisible = false;
 
@@ -1972,8 +2066,8 @@ document
         inv.style.bottom = "0";
 
         document
-        .getElementById("btnInventario")
-        .textContent = "▼";
+        .getElementById("imgInventario")
+        .src ="Assets_scaperoom/UI/Botones/flecha-abajo-blanco.png";
 
         inventarioVisible = true;
 
@@ -2073,7 +2167,6 @@ aciertos++;
 
 const porcentaje =
 (aciertos/redFlags.length)*100;
-
 
 if(porcentaje < 50){
 
@@ -2183,6 +2276,31 @@ document.getElementById("homeImage").src =
 "Assets_scaperoom/Bocetos/puzzle2-chat/celular-pantalla-inicio.png";
 
 },120);
+
+});
+
+document.querySelectorAll(".imgVolver").forEach(boton => {
+
+    boton.addEventListener("mousedown", () => {
+
+        boton.src =
+        "Assets_scaperoom/UI/Botones/boton-regresar-hover.png";
+
+    });
+
+    boton.addEventListener("mouseup", () => {
+
+        boton.src =
+        "Assets_scaperoom/UI/Botones/boton-regresar.png";
+
+    });
+
+    boton.addEventListener("mouseleave", () => {
+
+        boton.src =
+        "Assets_scaperoom/UI/Botones/boton-regresar.png";
+
+    });
 
 });
 
