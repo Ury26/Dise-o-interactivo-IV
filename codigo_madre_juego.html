@@ -45,6 +45,45 @@ body{
     pointer-events:none;
 }
 
+#hoverPuerta{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:.25s;
+    pointer-events:none;
+    display:none;
+}
+
+#puertaBtn{
+    position:absolute;
+    left:40%;
+    top:13%;
+    width:20%;
+    height:71%;
+    display:none;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+}
+
+#puertaRegresoBtn{
+    position:absolute;
+    left:35%;
+    top:12%;
+    width:30%;
+    height:73%;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+}
+
 #escritorioHover{
     position:absolute;
 
@@ -204,6 +243,114 @@ body{
     height:70%;
 
     cursor:pointer;
+}
+
+#hoverFriso{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:.25s;
+    pointer-events:none;
+    display:none;
+}
+
+#frisoHoverArea{
+    position:absolute;
+    left:0;
+    top:0;
+    display:none;
+}
+
+#frisoPuzzleTrigger{
+    position:absolute;
+    left:0;
+    top:0;
+    display:none;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+}
+
+#frisoPuzzleOverlay{
+    position:absolute;
+    display:none;
+    overflow:hidden;
+    background:#000;
+    z-index:10;
+}
+
+#frisoPuzzleFrame{
+    position:absolute;
+    width:1920px;
+    height:1080px;
+    border:0;
+    transform-origin:top left;
+}
+
+#expandFrisoPuzzle,
+#backFrisoPuzzle{
+    position:absolute;
+    z-index:2;
+    margin:0;
+    padding:8px 14px;
+    border:2px solid white;
+    border-radius:6px;
+    background:#000;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#expandFrisoPuzzle{
+    top:8px;
+    right:8px;
+}
+
+#backFrisoPuzzle{
+    display:none;
+    top:12px;
+    left:12px;
+    width:80px;
+    height:80px;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    color:transparent;
+    font-size:0;
+}
+
+#backFrisoPuzzle:hover{
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar-hover.png");
+}
+
+#backFrisoPuzzle:focus-visible{
+    outline:2px solid white;
+    outline-offset:2px;
+}
+
+#frisoPuzzleOverlay.fullscreen{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:60000;
+}
+
+#frisoPuzzleOverlay.fullscreen #expandFrisoPuzzle{
+    display:none;
+}
+
+#frisoPuzzleOverlay.fullscreen #backFrisoPuzzle{
+    display:block;
 }
 
 #intro{
@@ -1272,7 +1419,35 @@ z-index:99999;
 
 <div id="paredFriso" class="pared">
 
-    <img src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-friso-cerrado.png">
+    <img
+        id="baseFriso"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-friso-cerrado.png"
+        alt="Friso cerrado"
+    >
+
+    <img
+        id="hoverFriso"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-friso-cerrado-hover-completo.png"
+        alt=""
+    >
+
+    <div id="frisoHoverArea" aria-hidden="true"></div>
+    <button
+        id="frisoPuzzleTrigger"
+        type="button"
+        aria-label="Abrir el acertijo del friso"
+    ></button>
+
+    <div id="frisoPuzzleOverlay" aria-hidden="true">
+        <iframe
+            id="frisoPuzzleFrame"
+            src="Asertijos scaperoom HTML/Acertijo3 aislar.html"
+            title="Acertijo del friso"
+            scrolling="no"
+        ></iframe>
+        <button id="expandFrisoPuzzle" type="button">Ampliar</button>
+        <button id="backFrisoPuzzle" type="button">Volver</button>
+    </div>
 
 </div>
 
@@ -1280,8 +1455,57 @@ z-index:99999;
 
 <div id="paredPuerta" class="pared">
 
-    <img src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared3-puerta-cerrada.png">
+    <img
+        id="basePuerta"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared3-puerta-cerrada.png"
+        alt="Puerta cerrada"
+    >
+    <img
+        id="hoverPuerta"
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared3-puerta-cerrada-hover.png"
+        alt=""
+    >
+    <button
+        id="puertaBtn"
+        type="button"
+        aria-label="Abrir la puerta"
+    ></button>
 
+</div>
+
+<!-- HABITACION 2 -->
+
+<div id="paredBalance" class="pared">
+    <img
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-balance.png"
+        alt="Balanza"
+    >
+</div>
+
+<div id="paredComputadora" class="pared">
+    <img
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-computadora.png"
+        alt="Computadora"
+    >
+</div>
+
+<div id="paredPuertaHabitacion2" class="pared">
+    <img
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-puerta.png"
+        alt="Puerta abierta"
+    >
+    <button
+        id="puertaRegresoBtn"
+        type="button"
+        aria-label="Regresar a la habitación 1"
+    ></button>
+</div>
+
+<div id="paredEstante" class="pared">
+    <img
+        src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-estanteria-llena.png"
+        alt="Estantería llena"
+    >
 </div>
 
 <!-- ESCRITORIO -->
@@ -1548,6 +1772,10 @@ let estado = {
 
     tijeras:false,
 
+    frisoAbierto:false,
+
+    puertaAbierta:false,
+
     codigo479:false
 
 };
@@ -1674,8 +1902,10 @@ botonSiguiente.addEventListener(
 /* PAREDES */
 
 let paredActual = 0;
+let habitacionActual = 1;
+let transicionHabitacionEnCurso = false;
 
-const paredes = [
+const paredesHabitacion1 = [
 
     document.getElementById("paredProfesor"),
     document.getElementById("paredCasilleros"),
@@ -1684,9 +1914,29 @@ const paredes = [
 
 ];
 
+const paredesHabitacion2 = [
+
+    document.getElementById("paredBalance"),
+    document.getElementById("paredComputadora"),
+    document.getElementById("paredPuertaHabitacion2"),
+    document.getElementById("paredEstante")
+
+];
+
+const todasLasParedes = [
+    ...paredesHabitacion1,
+    ...paredesHabitacion2
+];
+
+let paredes = paredesHabitacion1;
+
 function mostrarPared(){
 
-    paredes.forEach(p=>{
+    paredes = habitacionActual === 1
+        ? paredesHabitacion1
+        : paredesHabitacion2;
+
+    todasLasParedes.forEach(p=>{
 
         p.style.display="none";
 
@@ -1704,14 +1954,11 @@ document
 .getElementById("der")
 .addEventListener("click",()=>{
 
-    paredActual++;
-
-    if(paredActual > 3){
-
-        paredActual = 0;
-
+    if(transicionHabitacionEnCurso){
+        return;
     }
 
+    paredActual = (paredActual + 1) % paredes.length;
     mostrarPared();
 
 });
@@ -1722,17 +1969,40 @@ document
 .getElementById("izq")
 .addEventListener("click",()=>{
 
-    paredActual--;
-
-    if(paredActual < 0){
-
-        paredActual = 3;
-
+    if(transicionHabitacionEnCurso){
+        return;
     }
 
+    paredActual = (paredActual - 1 + paredes.length) % paredes.length;
     mostrarPared();
 
 });
+
+function transicionarHabitacion(habitacionDestino, paredDestino){
+
+    if(transicionHabitacionEnCurso){
+        return;
+    }
+
+    transicionHabitacionEnCurso = true;
+    fade.style.transition = "opacity .6s ease";
+    fade.style.pointerEvents = "auto";
+    fade.style.opacity = "1";
+
+    setTimeout(()=>{
+        habitacionActual = habitacionDestino;
+        paredActual = paredDestino;
+        mostrarPared();
+        fade.style.opacity = "0";
+
+        setTimeout(()=>{
+            fade.style.pointerEvents = "none";
+            fade.style.transition = "";
+            transicionHabitacionEnCurso = false;
+        },600);
+    },600);
+
+}
 
 /* HOVER ESCRITORIO */
 
@@ -1775,6 +2045,148 @@ document.getElementById("mochilaHover");
 const tijerasHover =
 document.getElementById("tijerasHover");
 
+const hoverFriso =
+document.getElementById("hoverFriso");
+
+const frisoHoverArea =
+document.getElementById("frisoHoverArea");
+
+const baseFriso =
+document.getElementById("baseFriso");
+
+const frisoPuzzleTrigger =
+document.getElementById("frisoPuzzleTrigger");
+
+const frisoPuzzleOverlay =
+document.getElementById("frisoPuzzleOverlay");
+
+const frisoPuzzleFrame =
+document.getElementById("frisoPuzzleFrame");
+
+const basePuerta =
+document.getElementById("basePuerta");
+
+const hoverPuerta =
+document.getElementById("hoverPuerta");
+
+const puertaBtn =
+document.getElementById("puertaBtn");
+
+window.addEventListener("message",(event)=>{
+
+    if(
+        event.source !== frisoPuzzleFrame.contentWindow ||
+        !event.data ||
+        event.data.type !== "puzzle3-key-collected" ||
+        estado.llave
+    ){
+        return;
+    }
+
+    estado.llave = true;
+    hoverPuerta.style.display = "block";
+    puertaBtn.style.display = "block";
+    agregarInventario(
+        "Assets_scaperoom/Bocetos/Objetos de los fondos/llave_azul.png"
+    );
+
+});
+
+function ubicarEnFriso(elemento, region, medidas){
+
+    elemento.style.left =
+        `${medidas.offsetX + medidas.renderedWidth * region.x}px`;
+    elemento.style.top =
+        `${medidas.offsetY + medidas.renderedHeight * region.y}px`;
+    elemento.style.width =
+        `${medidas.renderedWidth * region.width}px`;
+    elemento.style.height =
+        `${medidas.renderedHeight * region.height}px`;
+
+}
+
+function ajustarAcertijoFriso(){
+
+    if(!baseFriso.naturalWidth || !baseFriso.naturalHeight){
+        return;
+    }
+
+    const scale = Math.max(
+        window.innerWidth / baseFriso.naturalWidth,
+        window.innerHeight / baseFriso.naturalHeight
+    );
+    const renderedWidth = baseFriso.naturalWidth * scale;
+    const renderedHeight = baseFriso.naturalHeight * scale;
+    const medidas = {
+        renderedWidth,
+        renderedHeight,
+        offsetX: (window.innerWidth - renderedWidth) / 2,
+        offsetY: (window.innerHeight - renderedHeight) / 2
+    };
+
+    ubicarEnFriso(frisoHoverArea, {
+        x:0.25,
+        y:0.08,
+        width:0.50,
+        height:0.64
+    }, medidas);
+    ubicarEnFriso(frisoPuzzleTrigger, {
+        x:0.298,
+        y:0.176,
+        width:0.404,
+        height:0.405
+    }, medidas);
+
+    if(!frisoPuzzleOverlay.classList.contains("fullscreen")){
+        ubicarEnFriso(frisoPuzzleOverlay, {
+            x:0.298,
+            y:0.176,
+            width:0.404,
+            height:0.405
+        }, medidas);
+    }
+
+    ajustarEscalaAcertijoFriso();
+
+}
+
+function ajustarEscalaAcertijoFriso(){
+
+    const width = frisoPuzzleOverlay.clientWidth;
+    const height = frisoPuzzleOverlay.clientHeight;
+
+    if(!width || !height){
+        return;
+    }
+
+    if(frisoPuzzleOverlay.classList.contains("fullscreen")){
+        frisoPuzzleFrame.style.left="0";
+        frisoPuzzleFrame.style.top="0";
+        frisoPuzzleFrame.style.transform =
+            `scale(${width / 1920},${height / 1080})`;
+        return;
+    }
+
+    const scale = Math.min(width / 1920, height / 1080);
+    const scaledWidth = 1920 * scale;
+    const scaledHeight = 1080 * scale;
+
+    frisoPuzzleFrame.style.left =
+        `${(width - scaledWidth) / 2}px`;
+    frisoPuzzleFrame.style.top =
+        `${(height - scaledHeight) / 2}px`;
+    frisoPuzzleFrame.style.transform =
+        `scale(${scale})`;
+
+}
+
+baseFriso.addEventListener("load",ajustarAcertijoFriso);
+window.addEventListener("resize",ajustarAcertijoFriso);
+
+if(baseFriso.complete){
+    ajustarAcertijoFriso();
+}
+
 telefonoBtn.addEventListener(
 "mouseenter",
 ()=>{
@@ -1808,6 +2220,122 @@ tijerasBtn.addEventListener("mouseenter",()=>{
 tijerasBtn.addEventListener("mouseleave",()=>{
 
     tijerasHover.style.opacity="0";
+
+});
+
+frisoHoverArea.addEventListener("mouseenter",()=>{
+
+    if(estado.tijeras){
+        hoverFriso.style.opacity="1";
+    }
+
+});
+
+frisoHoverArea.addEventListener("mouseleave",()=>{
+
+    hoverFriso.style.opacity="0";
+
+});
+
+frisoHoverArea.addEventListener("click",()=>{
+
+    if(!estado.tijeras || estado.frisoAbierto){
+        return;
+    }
+
+    estado.frisoAbierto = true;
+    baseFriso.addEventListener("load",()=>{
+        ajustarAcertijoFriso();
+        frisoPuzzleTrigger.style.display="block";
+    },{once:true});
+    baseFriso.src =
+        "Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-friso-abierto.png";
+    baseFriso.alt = "Friso abierto";
+    hoverFriso.style.opacity="0";
+    hoverFriso.style.display="none";
+    frisoHoverArea.style.display="none";
+
+});
+
+puertaBtn.addEventListener("mouseenter",()=>{
+
+    if(estado.llave && !estado.puertaAbierta){
+        hoverPuerta.style.opacity="1";
+    }
+
+});
+
+puertaBtn.addEventListener("mouseleave",()=>{
+
+    hoverPuerta.style.opacity="0";
+
+});
+
+puertaBtn.addEventListener("click",()=>{
+
+    if(!estado.llave || transicionHabitacionEnCurso){
+        return;
+    }
+
+    if(!estado.puertaAbierta){
+        estado.puertaAbierta = true;
+        basePuerta.src =
+            "Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared3-puerta-abierta.png";
+        basePuerta.alt = "Puerta abierta";
+        hoverPuerta.style.opacity="0";
+        hoverPuerta.style.display="none";
+        puertaBtn.setAttribute("aria-label","Entrar al segundo cuarto");
+        return;
+    }
+
+    transicionarHabitacion(2,0);
+
+});
+
+document
+.getElementById("puertaRegresoBtn")
+.addEventListener("click",()=>{
+
+    if(habitacionActual !== 2){
+        return;
+    }
+
+    transicionarHabitacion(1,3);
+
+});
+
+frisoPuzzleTrigger.addEventListener("click",()=>{
+
+    if(!estado.frisoAbierto){
+        return;
+    }
+
+    frisoPuzzleOverlay.style.display="block";
+    frisoPuzzleOverlay.setAttribute("aria-hidden","false");
+    ajustarAcertijoFriso();
+    requestAnimationFrame(ajustarEscalaAcertijoFriso);
+
+});
+
+document
+.getElementById("expandFrisoPuzzle")
+.addEventListener("click",()=>{
+
+    frisoPuzzleOverlay.classList.add("fullscreen");
+    frisoPuzzleOverlay.style.left="";
+    frisoPuzzleOverlay.style.top="";
+    frisoPuzzleOverlay.style.width="";
+    frisoPuzzleOverlay.style.height="";
+    requestAnimationFrame(ajustarEscalaAcertijoFriso);
+
+});
+
+document
+.getElementById("backFrisoPuzzle")
+.addEventListener("click",()=>{
+
+    frisoPuzzleOverlay.classList.remove("fullscreen");
+    requestAnimationFrame(ajustarAcertijoFriso);
 
 });
 
@@ -1849,9 +2377,12 @@ tijerasBtn.addEventListener("click",()=>{
 
     estado.tijeras = true;
     agregarInventario(
-        "Assets_scaperoom/Bocetos/Fondos/Habitacion1/tijeras-inventario.png"
+        "Assets_scaperoom/Bocetos/Objetos de los fondos/tijera.png"
     );
 
+    hoverFriso.style.display="block";
+    frisoHoverArea.style.display="block";
+    ajustarAcertijoFriso();
     tijerasHover.style.opacity="0";
     tijerasHover.style.display="none";
     tijerasBtn.style.display="none";
