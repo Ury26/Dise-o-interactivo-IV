@@ -7,6 +7,10 @@
 
 <style>
 
+:root{
+    --color-contenedor-texto:#252a31;
+}
+
 body{
     margin:0;
     overflow:hidden;
@@ -94,6 +98,7 @@ body.objetosDesbloqueados .objetoMedalla{
     left:64%;
     top:22%;
     width:8%;
+    z-index:60001;
 }
 
 #vistaCasilleros img.objetoRecogible{
@@ -148,6 +153,26 @@ body.objetosDesbloqueados .objetoMedalla{
     background:transparent;
     cursor:pointer;
     z-index:1;
+}
+
+#puertaFinalBtn{
+    position:absolute;
+    left:8%;
+    top:10%;
+    width:19%;
+    height:74%;
+    display:none;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    z-index:2;
+}
+
+#puertaFinalBtn:focus-visible{
+    outline:2px solid white;
+    outline-offset:2px;
 }
 
 #puertaRegresoBtn{
@@ -354,7 +379,7 @@ body.objetosDesbloqueados .objetoMedalla{
     padding:32px;
     border:2px solid #fff;
     border-radius:12px;
-    background:#252a31;
+    background:var(--color-contenedor-texto);
     font-size:clamp(20px,3vw,30px);
 }
 
@@ -902,7 +927,7 @@ body.objetosDesbloqueados .objetoMedalla{
 
     position:fixed;
 
-    bottom:0;
+    bottom:-120px;
     left:0;
 
     width:100%;
@@ -921,7 +946,11 @@ body.objetosDesbloqueados .objetoMedalla{
 
     z-index:15000;
 
-    transition:.3s;
+    transition:bottom .85s ease-in-out;
+}
+
+#inventario.inventario-temporal{
+    z-index:65001;
 }
 
 .slotInventario{
@@ -932,6 +961,16 @@ body.objetosDesbloqueados .objetoMedalla{
     border:2px solid white;
 
     background:#333;
+}
+
+.slotInventario.llaveAmarillaSeleccionada{
+    background:var(--color-contenedor-texto);
+    border-color:var(--color-contenedor-texto);
+    outline:3px solid #f5c542;
+}
+
+#contenedorInventario img[role="button"]{
+    cursor:pointer;
 }
 
 #tituloInventario{
@@ -1041,6 +1080,34 @@ body.objetosDesbloqueados .objetoMedalla{
     transition:opacity 2s ease;
 
     z-index:49000;
+}
+
+#pantallaFinal{
+    position:fixed;
+    inset:0;
+    z-index:48000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    box-sizing:border-box;
+    background:#101820;
+    color:#fff;
+    text-align:center;
+}
+
+#pantallaFinal.visible{
+    display:flex;
+}
+
+#pantallaFinal h1{
+    margin:0;
+    font-size:clamp(40px, 8vw, 88px);
+}
+
+#pantallaFinal p{
+    margin:16px 0 0;
+    font-size:clamp(18px, 3vw, 28px);
 }
 
 #acertijoTelefono{
@@ -1680,6 +1747,13 @@ z-index:99999;
 
 <div id="fade"></div>
 
+<div id="pantallaFinal" aria-hidden="true">
+    <div>
+        <h1>¡Lograste salir!</h1>
+        <p>Has completado el escape room.</p>
+    </div>
+</div>
+
 <div id="intro" style="display:none;">
 
     <img id="introImg"
@@ -1741,6 +1815,11 @@ z-index:99999;
         src="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Fondos/Habitacion1/habitacion1-pared2-casilleros-hover.png"
         id="hoverWallCasilleros"
     >
+    <button
+        id="puertaFinalBtn"
+        type="button"
+        aria-label="Salir del escape room"
+    ></button>
 
     <div id="casilleroHover"></div>
 
@@ -2142,7 +2221,7 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
 
     <img
         id="imgInventario"
-        src="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-abajo-blanco.png"
+        src="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-arriba-blanco.png"
         alt="Inventario"
     >
 
@@ -2156,6 +2235,7 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
 
     <div id="contenedorInventario">
 
+        <div class="slotInventario"></div>
         <div class="slotInventario"></div>
         <div class="slotInventario"></div>
         <div class="slotInventario"></div>
@@ -2187,11 +2267,21 @@ let estado = {
 
     puertaAbierta:false,
 
+    balanzaResuelta:false,
+
+    llaveAmarilla:false,
+
+    juegoTerminado:false,
+
     codigo479:false
 
 };
 
 let inventario = [];
+let llaveAmarillaOculta = false;
+
+const imagenLlaveAmarilla =
+"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/llave_amarilla.png";
 
 const menuInicio =
 document.getElementById("menuInicio");
@@ -2222,13 +2312,80 @@ document
 
 });
 
-let inventarioVisible = true;
+const panelInventario =
+document.getElementById("inventario");
+
+const botonInventario =
+document.getElementById("btnInventario");
+
+const imagenBotonInventario =
+document.getElementById("imgInventario");
+
+const iconoInventarioOculto =
+"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-arriba-blanco.png";
+
+const iconoInventarioVisible =
+"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-abajo-blanco.png";
+
+let inventarioVisible = false;
+let temporizadorInventario = null;
+
+function cambiarVisibilidadInventario(visible){
+
+    inventarioVisible = visible;
+    panelInventario.style.bottom = visible ? "0" : "-120px";
+    imagenBotonInventario.src =
+        visible ? iconoInventarioVisible : iconoInventarioOculto;
+
+}
+
+function ocultarInventario(){
+
+    if(temporizadorInventario !== null){
+        clearTimeout(temporizadorInventario);
+        temporizadorInventario = null;
+    }
+
+    panelInventario.classList.remove("inventario-temporal");
+    cambiarVisibilidadInventario(false);
+
+}
+
+function mostrarInventarioTemporal(){
+
+    if(temporizadorInventario !== null){
+        clearTimeout(temporizadorInventario);
+    }
+
+    panelInventario.classList.add("inventario-temporal");
+    cambiarVisibilidadInventario(true);
+    temporizadorInventario = setTimeout(()=>{
+        cambiarVisibilidadInventario(false);
+        temporizadorInventario = setTimeout(()=>{
+            panelInventario.classList.remove("inventario-temporal");
+            temporizadorInventario = null;
+        },850);
+    },2600);
+
+}
+
+function ocultarInventarioAlEntrarAcertijo(){
+
+    ocultarInventario();
+    botonInventario.style.display = "none";
+
+}
+
+function mostrarBotonInventario(){
+    botonInventario.style.display = "block";
+}
 
 function agregarInventario(imagen){
 
     inventario.push(imagen);
 
     actualizarInventario();
+    mostrarInventarioTemporal();
 
 }
 
@@ -2271,6 +2428,7 @@ function actualizarInventario(){
     slots.forEach(slot=>{
 
         slot.innerHTML = "";
+        slot.classList.remove("llaveAmarillaSeleccionada");
 
     });
 
@@ -2278,7 +2436,8 @@ function actualizarInventario(){
 
         if(index < slots.length){
 
-            slots[index].innerHTML =
+            const slot = slots[index];
+            slot.innerHTML =
 
             `<img src="${item}"
             style="
@@ -2286,6 +2445,40 @@ function actualizarInventario(){
             height:100%;
             object-fit:contain;
             ">`;
+
+            if(item === imagenLlaveAmarilla){
+                const imagenLlave = slot.querySelector("img");
+                imagenLlave.setAttribute("role","button");
+                imagenLlave.setAttribute("tabindex","0");
+                imagenLlave.setAttribute("aria-label","Llave amarilla");
+                imagenLlave.setAttribute(
+                    "aria-pressed",
+                    String(llaveAmarillaOculta)
+                );
+
+                if(llaveAmarillaOculta){
+                    slot.classList.add("llaveAmarillaSeleccionada");
+                    imagenLlave.style.display = "none";
+                }
+
+                const seleccionarLlave = ()=>{
+                    llaveAmarillaOculta = true;
+                    slot.classList.add("llaveAmarillaSeleccionada");
+                    imagenLlave.style.display = "none";
+                    imagenLlave.setAttribute(
+                        "aria-pressed",
+                        "true"
+                    );
+                };
+
+                imagenLlave.addEventListener("click",seleccionarLlave);
+                imagenLlave.addEventListener("keydown",event=>{
+                    if(event.key === "Enter" || event.key === " "){
+                        event.preventDefault();
+                        seleccionarLlave();
+                    }
+                });
+            }
 
         }
 
@@ -2512,6 +2705,9 @@ document.getElementById("hoverPuerta");
 const puertaBtn =
 document.getElementById("puertaBtn");
 
+const puertaFinalBtn =
+document.getElementById("puertaFinalBtn");
+
 window.addEventListener("message",(event)=>{
 
     if(
@@ -2642,6 +2838,7 @@ telefonoBtn.addEventListener(
 telefonoBtn.addEventListener(
 "click",
 ()=>{
+    ocultarInventarioAlEntrarAcertijo();
     telefonoHover.style.opacity = "0";
 
     vistaCasilleros.style.display = "none";
@@ -2711,9 +2908,37 @@ puertaBtn.addEventListener("mouseleave",()=>{
 
 });
 
+function terminarJuego(){
+
+    if(estado.juegoTerminado){
+        return;
+    }
+
+    estado.juegoTerminado = true;
+    fade.style.transition = "opacity 1s ease";
+    fade.style.opacity = "1";
+
+    setTimeout(()=>{
+
+        document.getElementById("juego").style.display = "none";
+        document.getElementById("izq").style.display = "none";
+        document.getElementById("der").style.display = "none";
+        document.getElementById("btnInventario").style.display = "none";
+        document.getElementById("inventario").style.display = "none";
+
+        const pantallaFinal =
+            document.getElementById("pantallaFinal");
+        pantallaFinal.classList.add("visible");
+        pantallaFinal.setAttribute("aria-hidden","false");
+
+        fade.style.opacity = "0";
+
+    },1000);
+}
+
 puertaBtn.addEventListener("click",()=>{
 
-    if(!estado.llave || transicionHabitacionEnCurso){
+    if(!estado.llave || transicionHabitacionEnCurso || estado.juegoTerminado){
         return;
     }
 
@@ -2729,6 +2954,20 @@ puertaBtn.addEventListener("click",()=>{
     }
 
     transicionarHabitacion(2,0);
+
+});
+
+puertaFinalBtn.addEventListener("click",()=>{
+
+    if(
+        !estado.llaveAmarilla ||
+        transicionHabitacionEnCurso ||
+        estado.juegoTerminado
+    ){
+        return;
+    }
+
+    terminarJuego();
 
 });
 
@@ -2750,6 +2989,7 @@ frisoPuzzleTrigger.addEventListener("click",()=>{
         return;
     }
 
+    ocultarInventarioAlEntrarAcertijo();
     frisoPuzzleOverlay.style.display="block";
     frisoPuzzleOverlay.setAttribute("aria-hidden","false");
     ajustarAcertijoFriso();
@@ -2765,6 +3005,7 @@ document.getElementById("computerPuzzleOverlay");
 
 computerPuzzleTrigger.addEventListener("click",()=>{
 
+    ocultarInventarioAlEntrarAcertijo();
     computerPuzzleOverlay.style.display="block";
     computerPuzzleOverlay.setAttribute("aria-hidden","false");
 
@@ -2776,6 +3017,7 @@ document
 
     computerPuzzleOverlay.style.display="none";
     computerPuzzleOverlay.setAttribute("aria-hidden","true");
+    mostrarBotonInventario();
 
 });
 
@@ -2789,6 +3031,7 @@ document
 .getElementById("balancePuzzleTrigger")
 .addEventListener("click",()=>{
 
+    ocultarInventarioAlEntrarAcertijo();
     balancePuzzleOverlay.style.display="block";
     balancePuzzleOverlay.setAttribute("aria-hidden","false");
     balancePuzzleFrame.contentWindow.postMessage({
@@ -2804,6 +3047,7 @@ document
 
     balancePuzzleOverlay.style.display="none";
     balancePuzzleOverlay.setAttribute("aria-hidden","true");
+    mostrarBotonInventario();
 
 });
 
@@ -2819,12 +3063,41 @@ window.addEventListener("message",(event)=>{
 
     computerPuzzleOverlay.style.display="none";
     computerPuzzleOverlay.setAttribute("aria-hidden","true");
+    mostrarBotonInventario();
     document.body.classList.add("objetosDesbloqueados");
 
     const exploracionPrompt =
         document.getElementById("exploracionPrompt");
     exploracionPrompt.classList.add("visible");
     exploracionPrompt.setAttribute("aria-hidden","false");
+
+});
+
+window.addEventListener("message",(event)=>{
+
+    if(
+        event.source !== balancePuzzleFrame.contentWindow ||
+        !event.data
+    ){
+        return;
+    }
+
+    if(event.data.type === "puzzle5-complete"){
+        estado.balanzaResuelta = true;
+        return;
+    }
+
+    if(
+        event.data.type !== "puzzle5-key-collected" ||
+        !estado.balanzaResuelta ||
+        estado.llaveAmarilla
+    ){
+        return;
+    }
+
+    estado.llaveAmarilla = true;
+    agregarInventario(imagenLlaveAmarilla);
+    puertaFinalBtn.style.display = "block";
 
 });
 
@@ -2858,6 +3131,7 @@ document
 
     frisoPuzzleOverlay.classList.remove("fullscreen");
     requestAnimationFrame(ajustarAcertijoFriso);
+    mostrarBotonInventario();
 
 });
 
@@ -2927,6 +3201,7 @@ document
     .style.display="none";
 
     vistaCasilleros.style.display="block";
+    mostrarBotonInventario();
 
 });
 
@@ -2961,6 +3236,8 @@ hitboxCasilleros.addEventListener(
 /* ENTRAR ESCRITORIO */
 
 hitbox.addEventListener("click",()=>{
+
+    ocultarInventarioAlEntrarAcertijo();
 
     document.getElementById("acertijo1")
     .style.display="block";
@@ -3001,6 +3278,7 @@ document
     "none";
 
     mostrarPared();
+    mostrarBotonInventario();
 
     document.getElementById("izq")
     .style.display="block";
@@ -3018,6 +3296,7 @@ document
     .style.display="none";
 
     mostrarPared();
+    mostrarBotonInventario();
 
     document.getElementById("izq")
     .style.display="block";
@@ -3254,34 +3533,15 @@ crearPuzzle(p,i);
 
 });
 
-document
-.getElementById("btnInventario")
-.addEventListener("click",()=>{
+botonInventario.addEventListener("click",()=>{
 
-    const inv =
-    document.getElementById("inventario");
-
-    if(inventarioVisible){
-
-        inv.style.bottom = "-120px";
-
-        document
-        .getElementById("imgInventario")
-        .src ="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-arriba-blanco.png";
-
-        inventarioVisible = false;
-
-    }else{
-
-        inv.style.bottom = "0";
-
-        document
-        .getElementById("imgInventario")
-        .src ="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/flecha-abajo-blanco.png";
-
-        inventarioVisible = true;
-
+    if(temporizadorInventario !== null){
+        clearTimeout(temporizadorInventario);
+        temporizadorInventario = null;
+        panelInventario.classList.remove("inventario-temporal");
     }
+
+    cambiarVisibilidadInventario(!inventarioVisible);
 
 });
 

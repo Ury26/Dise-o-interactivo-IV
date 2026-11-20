@@ -1436,8 +1436,11 @@ document.getElementById("checkPassword").addEventListener("click",()=>{
 
 const comicPages = [
     "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic-1.png",
-    "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic-2.png"
+    "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic-2.png",
+    "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic3.png"
 ];
+
+const comicPageNames = ["Primera","Segunda","Tercera"];
 
 let comicPageIndex = 0;
 
@@ -1448,6 +1451,10 @@ document.getElementById("finalNext").addEventListener("click",()=>{
     document.getElementById("comicPage").src = comicPages[comicPageIndex];
     document.getElementById("comicPage").alt = "Primera hoja del cómic del laberinto";
     document.getElementById("comicNext").classList.remove("hidden");
+    document.getElementById("comicNext").setAttribute(
+        "aria-label",
+        "Siguiente hoja del cómic"
+    );
     document.getElementById("final").classList.add("hidden");
     document.getElementById("comicScreen").classList.remove("hidden");
 
@@ -1462,11 +1469,15 @@ document.getElementById("comicNext").addEventListener("click",()=>{
 
     comicPageIndex++;
 
-    document.getElementById("comicPage").src = comicPages[comicPageIndex];
-    document.getElementById("comicPage").alt = "Segunda hoja del cómic del laberinto";
+    const comicPage = document.getElementById("comicPage");
+    comicPage.src = comicPages[comicPageIndex];
+    comicPage.alt =
+        `${comicPageNames[comicPageIndex]} hoja del cómic del laberinto`;
     document.getElementById("comicNext").setAttribute(
         "aria-label",
-        "Terminar el cómic y volver al juego"
+        comicPageIndex === comicPages.length - 1
+            ? "Terminar el cómic y volver al juego"
+            : "Siguiente hoja del cómic"
     );
 
 });

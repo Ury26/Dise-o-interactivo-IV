@@ -6,6 +6,10 @@
 <title>Balanza de Responsabilidad</title>
 
 <style>
+:root{
+    --color-contenedor-texto:#252a31;
+}
+
 body{
     font-family:Arial, sans-serif;
     background:#eef5ff url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle5-balanza/fondo-balanza.png") center / cover fixed no-repeat;
@@ -180,11 +184,50 @@ h1{
     min-height:380px;
     padding:68px 50px;
     border:0;
-    background:transparent url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/cuadrado-laberinto-sinfondo.png") center / 174% 138% no-repeat;
+    background:var(--color-contenedor-texto) url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle4-laberinto/cuadrado-laberinto-sinfondo.png") center / 174% 138% no-repeat;
     color:#fff;
     line-height:1.55;
     font-size:16px;
     text-align:left;
+    visibility:hidden;
+}
+
+#mensaje.visible{
+    visibility:visible;
+}
+
+#mensaje p{
+    margin:0;
+}
+
+#llaveRecompensaBtn{
+    display:block;
+    margin:12px auto 0;
+    padding:6px;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+}
+
+#llaveRecompensa{
+    display:block;
+    width:clamp(56px, 7vw, 88px);
+    height:auto;
+}
+
+#confirmacionLlave{
+    display:none;
+    box-sizing:border-box;
+    width:min(300px, 85%);
+    height:56px;
+    margin:8px auto 0;
+    padding:0;
+    border-radius:4px;
+    background:var(--color-contenedor-texto);
+}
+
+#confirmacionLlave.visible{
+    display:block;
 }
 
 #mensaje:empty{
@@ -197,8 +240,8 @@ h1{
     position:fixed;
     z-index:10;
     top:12px;
-    left:12px;
-    width:min(900px, calc(100vw - 24px));
+    left:100px;
+    width:min(900px, calc(100vw - 112px));
     padding:8px 12px 10px;
     box-sizing:border-box;
     border:1px solid rgba(255,255,255,.45);
@@ -336,7 +379,20 @@ role="group">
 </div>
 
 <div id="mensaje">
-Esta representación muestra que el profesor tiene una responsabilidad mayor por su autoridad: debe cuidar, respetar los límites y evitar cualquier abuso de poder. La alumna tiene derecho a expresar sus límites y pedir apoyo, pero no es responsable de la conducta del profesor ni de mantener la relación en equilibrio.
+    <p>Esta representación muestra que el profesor tiene una responsabilidad mayor por su autoridad: debe cuidar, respetar los límites y evitar cualquier abuso de poder. La alumna tiene derecho a expresar sus límites y pedir apoyo, pero no es responsable de la conducta del profesor ni de mantener la relación en equilibrio.</p>
+    <button
+        id="llaveRecompensaBtn"
+        type="button"
+        aria-label="Mostrar indicador de llave amarilla"
+        aria-pressed="false"
+    >
+        <img
+            id="llaveRecompensa"
+            src="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/llave_amarilla.png"
+            alt="Llave amarilla obtenida"
+        >
+    </button>
+    <div id="confirmacionLlave" aria-hidden="true"></div>
 </div>
 
 </div>
@@ -406,6 +462,23 @@ const cubosProfesor = document.getElementById("cubosProfesor");
 const objetosEnBandeja = new Map();
 const objetosColocados = new Set();
 const pesosPorLado = {alumna:0, profesor:0};
+const mensajeBalanza = document.getElementById("mensaje");
+const llaveRecompensaBtn =
+    document.getElementById("llaveRecompensaBtn");
+const confirmacionLlave =
+    document.getElementById("confirmacionLlave");
+let acertijoResuelto = false;
+
+llaveRecompensaBtn.addEventListener("click",()=>{
+    if(!acertijoResuelto){
+        return;
+    }
+
+    confirmacionLlave.classList.add("visible");
+    llaveRecompensaBtn.setAttribute("aria-pressed","true");
+    llaveRecompensaBtn.style.display = "none";
+    window.parent.postMessage({type:"puzzle5-key-collected"},"*");
+});
 
 function colocarObjeto(id, ladoDestino){
 
@@ -437,8 +510,18 @@ function colocarObjeto(id, ladoDestino){
 
     actualizarBalanza();
 
+    if(objetosColocados.size === objetosDelAcertijo.length){
+        acertijoResuelto = true;
+        mensajeBalanza.classList.add("visible");
+        estadoObjetos.textContent = "¡Balanza resuelta!";
+        window.parent.postMessage({type:"puzzle5-complete"},"*");
+        return;
+    }
+
     if(!objetosEnBandeja.size){
-        estadoObjetos.textContent = "Colocaste todos los objetos que has recolectado.";
+        const faltan = objetosDelAcertijo.length - objetosColocados.size;
+        estadoObjetos.textContent =
+            `Colocaste todos los objetos que has recolectado. Recoge los ${faltan} restantes para resolver la balanza.`;
         return;
     }
 
@@ -524,6 +607,10 @@ window.addEventListener("message",event=>{
         event.data.type !== "puzzle5-inventory" ||
         !Array.isArray(event.data.inventory)
     ){
+        return;
+    }
+
+    if(acertijoResuelto){
         return;
     }
 
