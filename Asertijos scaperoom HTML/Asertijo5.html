@@ -8,7 +8,7 @@
 <style>
 body{
     font-family:Arial, sans-serif;
-    background:#eef5ff;
+    background:#eef5ff url("../Assets_scaperoom/Bocetos/puzzle5-balanza/fondo-balanza.png") center / cover fixed no-repeat;
     text-align:center;
     margin:0;
     padding:20px;
@@ -57,11 +57,26 @@ h1{
 
 /* BALANZA */
 
+.balance-layout{
+    display:grid;
+    grid-template-columns:minmax(0, 2fr) minmax(230px, 1fr);
+    align-items:center;
+    gap:20px;
+    width:min(1100px, 100%);
+    margin:20px auto 0;
+}
+
+.balance-visual{
+    position:relative;
+    min-width:0;
+    padding-top:34px;
+}
+
 .balanza-container{
     position:relative;
-    width:700px;
-    height:350px;
-    margin:20px auto;
+    width:100%;
+    height:390px;
+    margin:0 auto;
 }
 
 .base{
@@ -69,73 +84,47 @@ h1{
     bottom:0;
     left:50%;
     transform:translateX(-50%);
-    width:160px;
-    height:30px;
-    background:#555;
-    border-radius:8px;
-}
-
-.soporte{
-    position:absolute;
-    bottom:30px;
-    left:50%;
-    transform:translateX(-50%);
-    width:18px;
-    height:180px;
-    background:#666;
+    width:clamp(150px, 20vw, 190px);
+    height:auto;
 }
 
 .barra{
     position:absolute;
     left:50%;
-    top:90px;
+    top:28px;
     transform:translateX(-50%) rotate(-10deg);
     transform-origin:center center;
-    width:520px;
-    height:12px;
-    background:#444;
-    border-radius:10px;
+    width:min(700px, 100%);
+    aspect-ratio:1643 / 453;
     transition:1s ease;
 }
 
-.cuerda{
+.palo-balanza{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+.contenedor{
     position:absolute;
-    width:4px;
-    height:55px;
-    top:12px;
-    background:#666;
+    top:34%;
+    width:clamp(110px, 18vw, 160px);
+    height:auto;
 }
 
-.cuerda-izq{
-    left:55px;
+.contenedor-izq{
+    left:13%;
 }
 
-.cuerda-der{
-    right:55px;
-}
-
-.plato{
-    position:absolute;
-    width:180px;
-    height:12px;
-    background:#555;
-    bottom:-55px;
-    border-radius:4px;
-}
-
-.izq{
-    left:-30px;
-}
-
-.der{
-    right:-30px;
+.contenedor-der{
+    right:14%;
 }
 
 .cubos{
     position:absolute;
-    width:180px;
+    top:92%;
+    width:clamp(110px, 18vw, 160px);
     min-height:60px;
-    bottom:15px;
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
@@ -143,11 +132,11 @@ h1{
 }
 
 .cubos-izq{
-    left:-30px;
+    left:13%;
 }
 
 .cubos-der{
-    right:-30px;
+    right:14%;
 }
 
 .cubo{
@@ -187,26 +176,37 @@ h1{
 
 .personas{
     display:flex;
-    justify-content:space-around;
-    width:700px;
-    margin:auto;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:2;
 }
 
 .etiqueta{
-    font-size:24px;
+    flex:1;
+    font-size:clamp(16px, 2vw, 24px);
     font-weight:bold;
     color:#1d3557;
 }
 
 #mensaje{
-    margin-top:30px;
-    max-width:850px;
-    margin-left:auto;
-    margin-right:auto;
-    line-height:1.6;
-    font-size:19px;
-    color:#0b7285;
-    font-weight:bold;
+    box-sizing:border-box;
+    margin:0;
+    padding:20px;
+    border:2px solid #111;
+    border-radius:12px;
+    background:#fff;
+    color:#000;
+    line-height:1.55;
+    font-size:17px;
+    text-align:left;
+}
+
+#mensaje:empty{
+    visibility:hidden;
+    padding:0;
+    border:0;
 }
 
 .instrucciones{
@@ -217,14 +217,27 @@ h1{
 
 @media(max-width:800px){
 
-    .balanza-container{
-        transform:scale(.8);
-        transform-origin:top center;
-        margin-bottom:-40px;
+    .balance-layout{
+        grid-template-columns:minmax(0, 1fr);
+        gap:0;
     }
 
-    .personas{
-        width:95%;
+    .balance-visual{
+        padding-top:30px;
+    }
+
+    .balanza-container{
+        height:460px;
+    }
+
+    .barra{
+        width:calc(100% - 24px);
+    }
+
+    #mensaje{
+        max-width:600px;
+        margin:0 auto 20px;
+        font-size:16px;
     }
 }
 </style>
@@ -263,19 +276,22 @@ Deber de cuidado
 
 </div>
 
+<div class="balance-layout">
+
+<div class="balance-visual">
+<div class="personas">
+<div class="etiqueta">Alumna</div>
+<div class="etiqueta">Profesor</div>
+</div>
+
 <div class="balanza-container">
-
-<div class="base"></div>
-
-<div class="soporte"></div>
+<img class="base" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/base-balanza.png" alt="">
 
 <div class="barra" id="barra">
 
-<div class="cuerda cuerda-izq"></div>
-<div class="cuerda cuerda-der"></div>
-
-<div class="plato izq"></div>
-<div class="plato der"></div>
+<img class="palo-balanza" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/palo-blanza.png" alt="">
+<img class="contenedor contenedor-izq" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/contenedor-uno-balanza.png" alt="">
+<img class="contenedor contenedor-der" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/contenedor-dos-balanza.png" alt="">
 
 <div class="cubos cubos-izq">
 <div class="cubo"></div>
@@ -291,10 +307,6 @@ ondrop="soltarPieza(event)">
 </div>
 
 </div>
-
-<div class="personas">
-<div class="etiqueta">Alumna</div>
-<div class="etiqueta">Profesor</div>
 </div>
 
 <div id="mensaje"></div>
@@ -378,7 +390,7 @@ function actualizarBalanza(){
             document
             .getElementById("mensaje")
             .innerHTML=
-            "Al observar la balanza, puede apreciarse cómo diversos factores vinculados a la posición de autoridad y a la responsabilidad profesional del profesor adquieren un peso significativo en la situación. Esta representación busca mostrar que, dentro de una relación educativa, las diferencias de poder implican responsabilidades adicionales para quien ocupa el rol de docente y tiene el deber de cuidar, orientar y mantener límites adecuados.";
+            "Esta representación muestra que el profesor tiene una responsabilidad mayor por su autoridad: debe cuidar, respetar los límites y evitar cualquier abuso de poder. La alumna tiene derecho a expresar sus límites y pedir apoyo, pero no es responsable de la conducta del profesor ni de mantener la relación en equilibrio.";
 
             break;
     }

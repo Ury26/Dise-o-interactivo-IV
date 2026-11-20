@@ -35,6 +35,14 @@ body{
     transition:background-color 1s ease,color .5s ease;
 }
 
+body:has(#menu:not(.hidden)){
+    background:#a5a5a5;
+}
+
+body:has(#passwordScreen:not(.hidden)){
+    background:#a5a5a5;
+}
+
 #menu,
 #passwordScreen,
 #game,
@@ -50,10 +58,6 @@ body{
     transition:background-color 1s ease,color .5s ease,border-color .5s ease;
 }
 
-#menu{
-    max-width:680px;
-}
-
 #passwordScreen{
     max-width:620px;
 }
@@ -64,6 +68,54 @@ body{
     background:#2a323c;
     color:#f5f7f9;
     box-shadow:0 7px 0 rgba(0,0,0,.24),0 18px 40px rgba(0,0,0,.2);
+}
+
+#passwordScreen{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    transform:scale(.8);
+    transform-origin:center;
+    justify-content:center;
+    width:100%;
+    height:100vh;
+    max-width:none;
+    margin:0;
+    padding:30px;
+    border:0;
+    border-radius:0;
+    background-color:#a5a5a5;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/contenedor-negro-gris.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:min(90vw,160vh) auto;
+    box-shadow:none;
+}
+
+#menu{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    transform:scale(.75);
+    transform-origin:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    min-height:100vh;
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0 16px 10vh;
+    border:0;
+    border-radius:0;
+    background-color:#a5a5a5;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/contenedor-cuadrado-negro-gris.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:min(90vw,160vh) auto;
+    box-shadow:none;
 }
 
 #menu h1,
@@ -81,17 +133,135 @@ body{
 }
 
 #passwordScreen .symbolLegend{
-    color:#e2e7ec;
+    color:#fff;
+}
+
+#passwordScreen{
+    padding:30px 30px 61px;
+}
+
+#passwordScreen h1{
+    position:absolute;
+    top:19vh;
+    left:50%;
+    transform:translateX(-50%);
+    margin-bottom:0;
+    font-size:clamp(2rem,4.4vw,2.7rem);
+    color:#fff;
+}
+
+#passwordScreen > p:not(#passwordMsg){
+    position:absolute;
+    top:25vh;
+    left:50%;
+    max-width:calc(100% - 32px);
+    margin:0;
+    transform:translateX(-50%);
+    font-size:18px;
+    color:#fff;
+}
+
+#passwordScreen .symbolLegend{
+    position:absolute;
+    top:31.1vh;
+    left:50%;
+    width:max-content;
+    margin:0;
+    transform:translateX(-50%);
+    font-size:16px;
+}
+
+#passwordScreen .symbolLegend img{
+    width:24px;
+    height:32px;
+}
+
+#passwordScreen #passwordGrid{
+    position:absolute;
+    top:36.4vh;
+    left:50%;
+    gap:2px 4px;
+    margin:0;
+    transform:translateX(-50%);
+}
+
+#passwordScreen .row{
+    gap:4px;
+}
+
+#passwordScreen .passCell{
+    width:clamp(69px,8.85vw,76.5px);
+    height:clamp(69px,8.85vw,76.5px);
+    border:3px solid #e6c445;
+    box-shadow:0 5px 0 #a58a2c,0 0 0 2px #252a31;
 }
 
 #game{
-    max-width:900px;
-    background:#fff;
+    position:fixed;
+    inset:0;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100vh;
+    max-width:none;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    background-color:#06121b;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/cuadrado-laberinto-sinfondo.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:min(100vw,177.78vh) auto;
+    background-blend-mode:multiply;
+}
+
+#game h2{
+    position:absolute;
+    top:20.5vh;
+    left:50%;
+    margin:0;
+    transform:translateX(-50%);
+    color:#d7dde2;
+}
+
+#game #maze{
+    position:absolute;
+    top:52.5%;
+    left:50%;
+    margin:0;
+    transform:translate(-50%,-50%);
+}
+
+#game.level-three #maze{
+    top:59vh;
 }
 
 #final{
-    max-width:1020px;
-    background:#fff;
+    position:fixed;
+    inset:0;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100vh;
+    max-width:none;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    background-color:#efbe8e;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/contenedor-cuadrado-naranja.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:min(75vw,133.33vh) auto;
 }
 
 .hidden{
@@ -113,8 +283,24 @@ h2{
     font-size:clamp(1.45rem,3vw,2rem);
 }
 
+#final h1{
+    font-size:clamp(1.5rem,3vw,2rem);
+}
+
+#final h1,
 #final > p{
+    position:relative;
+    top:-8px;
+}
+
+#final > p{
+    width:min(35vw,640px);
+    max-width:640px;
+    margin:0;
     color:var(--muted);
+    font-size:15px;
+    line-height:1.45;
+    text-align:center;
 }
 
 button{
@@ -131,15 +317,49 @@ button{
     transition:transform .16s ease,background-color .16s ease,box-shadow .16s ease;
 }
 
+#startBtn{
+    position:absolute;
+    top:calc(50vh - min(45vh,25.3125vw) + min(66.915vh,37.638vw));
+    left:50%;
+    width:min(17.11vw,30.42vh,329px);
+    height:auto;
+    min-height:0;
+    aspect-ratio:365 / 205;
+    padding:0;
+    transform:translateX(-50%);
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    box-shadow:none;
+    color:var(--ink);
+    font-size:clamp(1.25rem,2.5vw,1.75rem);
+}
+
 button:hover{
     transform:translateY(-2px);
     background:#ffe27e;
     box-shadow:0 6px 0 var(--accent-dark);
 }
 
+#startBtn:hover{
+    transform:translate(-50%,-2px);
+    background-color:transparent;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo-hover.png");
+    box-shadow:none;
+}
+
 button:active{
     transform:translateY(1px);
     box-shadow:0 2px 0 var(--accent-dark);
+}
+
+#startBtn:active{
+    transform:translate(-50%,1px);
+    box-shadow:none;
 }
 
 button:focus-visible,
@@ -238,6 +458,88 @@ button:focus-visible,
     color:var(--muted);
 }
 
+#game #message{
+    position:absolute;
+    top:24vh;
+    left:50%;
+    width:min(80vw,560px);
+    height:min(15.7vw,94px);
+    aspect-ratio:auto;
+    min-height:0;
+    margin:0;
+    padding:0;
+    transform:translateX(-50%);
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/rectangulo-laberinto.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    color:#d7dde2;
+}
+
+#game #thoughts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:min(80vw,320px);
+    min-height:0;
+    margin:0;
+    padding:10px 14px;
+    transform:translate(-50%,calc(-100% - 12px));
+    border:1px solid #252a31;
+    border-radius:14px;
+    background:#f5f7f9;
+    color:#252a31;
+    font-style:normal;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    z-index:2;
+    transition:opacity .25s ease;
+}
+
+#game.level-three #thoughts{
+    visibility:visible;
+}
+
+#game #thoughts::after{
+    position:absolute;
+    bottom:-10px;
+    left:50%;
+    transform:translateX(-50%);
+    border:10px solid transparent;
+    border-top-color:#f5f7f9;
+    border-bottom:0;
+    content:"";
+}
+
+#game #thoughts.bubble-below{
+    transform:translate(-50%,12px);
+}
+
+#game #thoughts.bubble-below::after{
+    top:-10px;
+    bottom:auto;
+    border:10px solid transparent;
+    border-bottom-color:#f5f7f9;
+    border-top:0;
+}
+
+#game > p{
+    position:absolute;
+    top:auto;
+    left:50%;
+    bottom:calc(50vh + min(50vh,28.125vw) - min(87.22vh,49.06vw) + 24px);
+    width:calc(100% - 32px);
+    margin:0;
+    transform:translateX(-50%);
+    color:#c4cbd2;
+}
+
 #passwordGrid{
     display:flex;
     flex-direction:column;
@@ -315,25 +617,77 @@ button:focus-visible,
 }
 
 #checkPassword{
-    display:block;
-    margin:12px auto;
+    position:absolute;
+    top:calc(50vh - min(45vh,25.3125vw) + min(66.915vh,37.638vw));
+    left:50%;
+    width:min(17.11vw,30.42vh,329px);
+    height:auto;
+    min-height:0;
+    aspect-ratio:365 / 205;
+    margin:0;
+    padding:0;
+    transform:translateX(-50%);
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    box-shadow:none;
+    font-size:clamp(1.25rem,2.5vw,1.75rem);
+}
+
+#checkPassword:hover{
+    transform:translate(-50%,-2px);
+    background-color:transparent;
+    background-image:url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo-hover.png");
+    box-shadow:none;
+}
+
+#checkPassword:active{
+    transform:translate(-50%,1px);
+    box-shadow:none;
 }
 
 #passwordMsg{
+    position:absolute;
+    top:91vh;
+    left:0;
+    width:100%;
     min-height:30px;
-    margin:2px 0 0;
+    margin:0;
     color:#a33d32;
     font-weight:bold;
     text-align:center;
 }
 
 #finalNext{
-    min-width:64px;
-    min-height:58px;
-    margin-top:28px;
-    padding:4px 14px;
-    font-size:32px;
+    position:absolute;
+    top:calc(50vh + min(14.35vw,25.5vh));
+    left:50%;
+    width:min(12.5vw,22.2vh,240px);
+    height:auto;
+    min-width:0;
+    min-height:0;
+    aspect-ratio:2 / 1;
+    margin:0;
+    padding:0;
+    transform:translate(-50%,-50%);
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--ink);
+    box-shadow:none;
+    font-size:clamp(1.5rem,3vw,2rem);
     line-height:1;
+}
+
+#finalNext:hover,
+#finalNext:active{
+    transform:translate(-50%,-50%);
+    background:transparent;
+    box-shadow:none;
 }
 
 @media(max-width:600px){
@@ -347,6 +701,21 @@ button:focus-visible,
     #final{
         padding:22px 16px;
         border-radius:14px;
+    }
+
+    #game{
+        padding:0;
+        border-radius:0;
+    }
+
+    #final{
+        padding:0;
+        border-radius:0;
+    }
+
+    #menu{
+        padding:0 16px 10vh;
+        border-radius:0;
     }
 
     .row{
@@ -439,7 +808,7 @@ button:focus-visible,
 
     <h1>La salida siempre existió</h1>
 
-    <p style="max-width:800px;margin:auto;line-height:1.7">
+    <p>
         Durante el recorrido parecía que no existía una salida. 
         Sin embargo, había caminos que podían conducir a apoyo, acompañamiento y ayuda.
         El laberinto representa la incertidumbre que puede experimentar una
@@ -563,9 +932,9 @@ function updateLevelBackground(progress){
     gameScreen.style.backgroundColor = background;
     gameScreen.style.color = textColor;
     gameScreen.style.borderColor = isDark ? "#f5f7f9" : "#252a31";
-    gameScreen.querySelector("h2").style.color = textColor;
-    gameScreen.querySelector("p").style.color = secondaryColor;
-    thoughtsBox.style.color = secondaryColor;
+    gameScreen.querySelector("h2").style.color = "#d7dde2";
+    gameScreen.querySelector("p").style.color = "#c4cbd2";
+    thoughtsBox.style.color = currentLevel===2 ? "#252a31" : "#c4cbd2";
 }
 
 document.getElementById("startBtn").addEventListener("click",()=>{
@@ -578,6 +947,8 @@ document.getElementById("startBtn").addEventListener("click",()=>{
 
 
 function loadLevel(){
+
+    document.getElementById("game").classList.toggle("level-three",currentLevel===2);
 
     mazeData = levels[currentLevel].map(r=>r.split(""));
 
@@ -650,6 +1021,10 @@ function loadLevel(){
     }
 
     drawMaze();
+    if(currentLevel===2){
+        showThought();
+        setInterval(showThought,4000);
+    }
 
 }
 
@@ -695,6 +1070,8 @@ function drawMaze(){
 
             if(playerX===x && playerY===y){
 
+    cell.classList.add("player-cell");
+
     const img = document.createElement("img");
 
     img.src = getPlayerGif();
@@ -727,6 +1104,41 @@ function drawMaze(){
         }
 
     }
+
+    positionThoughtBubble();
+
+}
+
+function positionThoughtBubble(){
+
+    if(currentLevel!==2 || !thoughtsBox.textContent){
+        thoughtsBox.style.opacity="0";
+        return;
+    }
+
+    const playerCell=maze.querySelector(".player-cell");
+
+    if(!playerCell) return;
+
+    const cellRect=playerCell.getBoundingClientRect();
+    const bubbleRect=thoughtsBox.getBoundingClientRect();
+    const halfBubbleWidth=bubbleRect.width/2;
+    const centerX=Math.max(
+        halfBubbleWidth+12,
+        Math.min(
+            window.innerWidth-halfBubbleWidth-12,
+            cellRect.left+cellRect.width/2
+        )
+    );
+    const messageBottom=
+    document.getElementById("message").getBoundingClientRect().bottom+8;
+    const fitsAbove=
+    cellRect.top-bubbleRect.height-12>=messageBottom;
+
+    thoughtsBox.classList.toggle("bubble-below",!fitsAbove);
+    thoughtsBox.style.left=`${centerX}px`;
+    thoughtsBox.style.top=`${fitsAbove ? cellRect.top : cellRect.bottom}px`;
+    thoughtsBox.style.opacity="1";
 
 }
 
@@ -868,13 +1280,11 @@ function showThought(){
         Math.random()*thoughts.length
         )];
 
-        thoughtsBox.style.opacity="1";
+        positionThoughtBubble();
 
     },500);
 
 }
-
-setInterval(showThought,4000);
 
 const cells =
 document.querySelectorAll(".passCell");
