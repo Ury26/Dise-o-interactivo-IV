@@ -690,6 +690,52 @@ button:focus-visible,
     box-shadow:none;
 }
 
+#comicScreen{
+    position:fixed;
+    inset:0;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+}
+
+#comicPage{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+#comicNext{
+    position:absolute;
+    right:clamp(16px,3vw,40px);
+    bottom:clamp(16px,3vh,32px);
+    width:clamp(64px,8vw,110px);
+    height:clamp(64px,8vw,110px);
+    min-width:0;
+    min-height:0;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+}
+
+#comicNext:hover,
+#comicNext:active{
+    transform:none;
+    background:transparent;
+    box-shadow:none;
+}
+
+#comicNext img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
 @media(max-width:600px){
     body{
         padding:14px;
@@ -817,6 +863,13 @@ button:focus-visible,
 
     <button id="finalNext" type="button" aria-label="Continuar">→</button>
 
+</div>
+
+<div id="comicScreen" class="hidden">
+    <img id="comicPage" src="" alt="">
+    <button id="comicNext" type="button" aria-label="Siguiente hoja del cómic">
+        <img src="../Assets_scaperoom/UI/Botones/flecha-derecha-negra.png" alt="">
+    </button>
 </div>
 
 <script>
@@ -1378,6 +1431,43 @@ document.getElementById("checkPassword").addEventListener("click",()=>{
         "La disposición no es correcta.";
 
     }
+
+});
+
+const comicPages = [
+    "../Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic-1.png",
+    "../Assets_scaperoom/Bocetos/puzzle4-laberinto/laberinto-comic-2.png"
+];
+
+let comicPageIndex = 0;
+
+document.getElementById("finalNext").addEventListener("click",()=>{
+
+    comicPageIndex = 0;
+
+    document.getElementById("comicPage").src = comicPages[comicPageIndex];
+    document.getElementById("comicPage").alt = "Primera hoja del cómic del laberinto";
+    document.getElementById("comicNext").classList.remove("hidden");
+    document.getElementById("final").classList.add("hidden");
+    document.getElementById("comicScreen").classList.remove("hidden");
+
+});
+
+document.getElementById("comicNext").addEventListener("click",()=>{
+
+    if(comicPageIndex >= comicPages.length - 1){
+        window.parent.postMessage({type:"puzzle4-comics-complete"},"*");
+        return;
+    }
+
+    comicPageIndex++;
+
+    document.getElementById("comicPage").src = comicPages[comicPageIndex];
+    document.getElementById("comicPage").alt = "Segunda hoja del cómic del laberinto";
+    document.getElementById("comicNext").setAttribute(
+        "aria-label",
+        "Terminar el cómic y volver al juego"
+    );
 
 });
 

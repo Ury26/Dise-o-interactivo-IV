@@ -16,59 +16,35 @@ body{
 
 h1{
     color:#1d3557;
+    position:relative;
+    z-index:3;
+    transform:translateY(calc(27vh - 45px));
 }
 
 #game{
-    max-width:1000px;
+    max-width:1700px;
     margin:auto;
-}
-
-/* CAJA DE FACTORES */
-
-#cajaPiezas{
-    width:90%;
-    max-width:850px;
-    margin:20px auto;
-    padding:15px;
-    background:white;
-    border:2px solid #888;
-    border-radius:12px;
-}
-
-#cajaPiezas h3{
-    margin-top:0;
-}
-
-.pieza{
-    display:inline-block;
-    margin:6px;
-    padding:10px 14px;
-    background:#ffd8a8;
-    border:2px solid #e67700;
-    border-radius:8px;
-    cursor:grab;
-    user-select:none;
-    font-size:14px;
-}
-
-.pieza:hover{
-    transform:scale(1.05);
 }
 
 /* BALANZA */
 
 .balance-layout{
     display:grid;
-    grid-template-columns:minmax(0, 2fr) minmax(230px, 1fr);
+    grid-template-columns:minmax(0, 1fr) minmax(300px, 340px);
     align-items:center;
-    gap:20px;
-    width:min(1100px, 100%);
+    gap:28px;
+    width:min(1600px, 100%);
     margin:20px auto 0;
 }
 
 .balance-visual{
     position:relative;
+    align-self:start;
     min-width:0;
+    width:min(820px, calc(100% - 380px));
+    margin:0 auto;
+    transform:translateY(calc(55vh - 100px - 50%));
+    left:184px;
     padding-top:34px;
 }
 
@@ -77,6 +53,7 @@ h1{
     width:100%;
     height:390px;
     margin:0 auto;
+    transform:translateY(10px);
 }
 
 .base{
@@ -92,7 +69,7 @@ h1{
     position:absolute;
     left:50%;
     top:28px;
-    transform:translateX(-50%) rotate(-10deg);
+    transform:translateX(-50%) rotate(0deg);
     transform-origin:center center;
     width:min(700px, 100%);
     aspect-ratio:1643 / 453;
@@ -122,13 +99,23 @@ h1{
 
 .cubos{
     position:absolute;
-    top:92%;
+    top:62%;
     width:clamp(110px, 18vw, 160px);
-    min-height:60px;
+    height:34%;
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-    gap:5px;
+    align-content:flex-end;
+    gap:3px;
+    padding:0 2px 5px;
+    box-sizing:border-box;
+    border-radius:50%;
+    background:transparent;
+}
+
+.cubos.drop-activo{
+    background:rgba(77,171,247,.22);
+    outline:2px dashed rgba(24,100,171,.65);
 }
 
 .cubos-izq{
@@ -146,18 +133,11 @@ h1{
     border:2px solid #1864ab;
 }
 
-.factor-colocado{
-    width:75px;
-    min-height:40px;
-    padding:4px;
-    border-radius:6px;
-    background:#ff8787;
-    border:2px solid #c92a2a;
-    font-size:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
+.objeto-colocado{
+    width:clamp(24px, 3vw, 40px);
+    height:clamp(24px, 3vw, 40px);
+    object-fit:contain;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));
     animation:caer .4s ease;
 }
 
@@ -177,14 +157,17 @@ h1{
 .personas{
     display:flex;
     position:absolute;
-    top:0;
+    top:45px;
     left:0;
     width:100%;
+    padding:0 12%;
+    box-sizing:border-box;
+    justify-content:space-between;
     z-index:2;
 }
 
 .etiqueta{
-    flex:1;
+    flex:0 0 auto;
     font-size:clamp(16px, 2vw, 24px);
     font-weight:bold;
     color:#1d3557;
@@ -192,14 +175,15 @@ h1{
 
 #mensaje{
     box-sizing:border-box;
-    margin:0;
-    padding:20px;
-    border:2px solid #111;
-    border-radius:12px;
-    background:#fff;
-    color:#000;
+    align-self:start;
+    margin:120px 0 0;
+    min-height:380px;
+    padding:68px 50px;
+    border:0;
+    background:transparent url("../Assets_scaperoom/Bocetos/puzzle4-laberinto/cuadrado-laberinto-sinfondo.png") center / 174% 138% no-repeat;
+    color:#fff;
     line-height:1.55;
-    font-size:17px;
+    font-size:16px;
     text-align:left;
 }
 
@@ -209,13 +193,77 @@ h1{
     border:0;
 }
 
-.instrucciones{
-    max-width:900px;
-    margin:auto;
-    color:#444;
+#zonaObjetos{
+    position:fixed;
+    z-index:10;
+    top:12px;
+    left:12px;
+    width:min(900px, calc(100vw - 24px));
+    padding:8px 12px 10px;
+    box-sizing:border-box;
+    border:1px solid rgba(255,255,255,.45);
+    border-radius:12px;
+    background:rgba(24,35,46,.94);
+    color:#fff;
+    box-shadow:0 4px 18px rgba(0,0,0,.35);
 }
 
-@media(max-width:800px){
+#estadoObjetos{
+    margin:0 0 6px;
+    font-size:13px;
+    text-align:left;
+}
+
+#bandejaObjetos{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    min-height:84px;
+    max-height:94px;
+    overflow-x:auto;
+}
+
+.pieza{
+    display:flex;
+    flex:0 0 86px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    min-height:78px;
+    padding:4px;
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:8px;
+    background:#fff;
+    color:#1d3557;
+    cursor:grab;
+}
+
+.pieza:active{
+    cursor:grabbing;
+}
+
+.pieza img{
+    width:52px;
+    height:52px;
+    object-fit:contain;
+}
+
+.pieza span{
+    max-width:100%;
+    overflow:hidden;
+    font-size:10px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.pieza-colocada{
+    width:clamp(24px, 3vw, 40px);
+    height:clamp(24px, 3vw, 40px);
+    object-fit:contain;
+}
+
+@media(max-width:1200px){
 
     .balance-layout{
         grid-template-columns:minmax(0, 1fr);
@@ -223,11 +271,14 @@ h1{
     }
 
     .balance-visual{
+        left:auto;
+        width:min(820px, 100%);
         padding-top:30px;
     }
 
     .balanza-container{
         height:460px;
+        transform:translateY(20px);
     }
 
     .barra{
@@ -235,8 +286,8 @@ h1{
     }
 
     #mensaje{
-        max-width:600px;
-        margin:0 auto 20px;
+        width:min(340px, 100%);
+        margin:120px auto 20px;
         font-size:16px;
     }
 }
@@ -247,34 +298,6 @@ h1{
 <div id="game">
 
 <h1>Balanza de Responsabilidad</h1>
-
-<p class="instrucciones">
-Arrastra cada factor desde la caja hasta el plato del profesor y observa cómo cambia el equilibrio de la balanza.
-</p>
-
-<div id="cajaPiezas">
-
-<h3>Factores</h3>
-
-<div class="pieza" draggable="true">Autoridad</div>
-
-<div class="pieza" draggable="true">
-Responsabilidad profesional
-</div>
-
-<div class="pieza" draggable="true">
-Asimetría de poder
-</div>
-
-<div class="pieza" draggable="true">
-Confianza institucional
-</div>
-
-<div class="pieza" draggable="true">
-Deber de cuidado
-</div>
-
-</div>
 
 <div class="balance-layout">
 
@@ -293,15 +316,18 @@ Deber de cuidado
 <img class="contenedor contenedor-izq" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/contenedor-uno-balanza.png" alt="">
 <img class="contenedor contenedor-der" src="../Assets_scaperoom/Bocetos/puzzle5-balanza/contenedor-dos-balanza.png" alt="">
 
-<div class="cubos cubos-izq">
-<div class="cubo"></div>
+<div
+class="cubos cubos-izq"
+id="cubosAlumna"
+aria-label="Balanza de la alumna"
+role="group">
 </div>
 
 <div
 class="cubos cubos-der"
 id="cubosProfesor"
-ondragover="permitirSoltar(event)"
-ondrop="soltarPieza(event)">
+aria-label="Balanza del profesor"
+role="group">
 </div>
 
 </div>
@@ -309,92 +335,225 @@ ondrop="soltarPieza(event)">
 </div>
 </div>
 
-<div id="mensaje"></div>
+<div id="mensaje">
+Esta representación muestra que el profesor tiene una responsabilidad mayor por su autoridad: debe cuidar, respetar los límites y evitar cualquier abuso de poder. La alumna tiene derecho a expresar sus límites y pedir apoyo, pero no es responsable de la conducta del profesor ni de mantener la relación en equilibrio.
+</div>
 
 </div>
+
+<section id="zonaObjetos" aria-label="Objetos recolectados">
+    <p id="estadoObjetos" aria-live="polite">Abre el acertijo desde la balanza para cargar tus objetos.</p>
+    <div id="bandejaObjetos"></div>
+</section>
 
 <script>
 
-let pesos = 0;
-let piezaArrastrada = null;
+const objetosDelAcertijo = [
+    {
+        id:"celular",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/Celular-objeto.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/Celular-objeto.png",
+        nombre:"Celular",
+        lado:"alumna",
+        peso:1
+    },
+    {
+        id:"escultura",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/escultura.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/escultura.png",
+        nombre:"Escultura",
+        lado:"alumna",
+        peso:1
+    },
+    {
+        id:"chica",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/chica-estatua.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/chica-estatua.png",
+        nombre:"Estatua de chica",
+        lado:"alumna",
+        peso:1
+    },
+    {
+        id:"certificado",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/Certificado-objeto.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/Certificado-objeto.png",
+        nombre:"Certificado",
+        lado:"profesor",
+        peso:2
+    },
+    {
+        id:"profesor",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/profesor-estatua.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/profesor-estatua.png",
+        nombre:"Estatua del profesor",
+        lado:"profesor",
+        peso:2
+    },
+    {
+        id:"medalla",
+        inventario:"Assets_scaperoom/Bocetos/Objetos de los fondos/medalla.png",
+        imagen:"../Assets_scaperoom/Bocetos/Objetos de los fondos/medalla.png",
+        nombre:"Medalla",
+        lado:"profesor",
+        peso:2
+    }
+];
 
-document.querySelectorAll(".pieza").forEach(pieza=>{
+const bandejaObjetos = document.getElementById("bandejaObjetos");
+const estadoObjetos = document.getElementById("estadoObjetos");
+const cubosAlumna = document.getElementById("cubosAlumna");
+const cubosProfesor = document.getElementById("cubosProfesor");
+const objetosEnBandeja = new Map();
+const objetosColocados = new Set();
+const pesosPorLado = {alumna:0, profesor:0};
 
-    pieza.addEventListener("dragstart",function(){
-        piezaArrastrada=this;
-    });
+function colocarObjeto(id, ladoDestino){
 
-});
+    const objeto = objetosDelAcertijo.find(item=>item.id === id);
+    const ficha = objetosEnBandeja.get(id);
 
-function permitirSoltar(e){
-    e.preventDefault();
-}
-
-function soltarPieza(e){
-
-    e.preventDefault();
-
-    if(!piezaArrastrada || pesos>=5){
+    if(!objeto || !ficha || objetosColocados.has(id)){
         return;
     }
 
-    pesos++;
+    if(objeto.lado !== ladoDestino){
+        const ladoCorrecto =
+            objeto.lado === "alumna" ? "de la alumna" : "del profesor";
+        estadoObjetos.textContent =
+            `${objeto.nombre}: colócalo del lado ${ladoCorrecto}.`;
+        return;
+    }
 
-    const factor = document.createElement("div");
+    const imagen = document.createElement("img");
+    imagen.className = "objeto-colocado";
+    imagen.src = objeto.imagen;
+    imagen.alt = objeto.nombre;
 
-    factor.className="factor-colocado";
-
-    factor.textContent=
-    piezaArrastrada.textContent;
-
-    document
-    .getElementById("cubosProfesor")
-    .appendChild(factor);
-
-    piezaArrastrada.remove();
+    (ladoDestino === "alumna" ? cubosAlumna : cubosProfesor).appendChild(imagen);
+    ficha.remove();
+    objetosEnBandeja.delete(id);
+    objetosColocados.add(id);
+    pesosPorLado[ladoDestino] += objeto.peso;
 
     actualizarBalanza();
+
+    if(!objetosEnBandeja.size){
+        estadoObjetos.textContent = "Colocaste todos los objetos que has recolectado.";
+        return;
+    }
+
+    estadoObjetos.textContent =
+        `Objetos colocados: ${objetosColocados.size}. Haz clic o arrastra cada objeto al lado indicado.`;
 }
 
 function actualizarBalanza(){
 
-    const barra=document.getElementById("barra");
+    const diferencia = pesosPorLado.profesor - pesosPorLado.alumna;
+    const angulo = Math.max(-18, Math.min(18, diferencia * 5));
 
-    switch(pesos){
-
-        case 1:
-            barra.style.transform=
-            "translateX(-50%) rotate(-5deg)";
-            break;
-
-        case 2:
-            barra.style.transform=
-            "translateX(-50%) rotate(0deg)";
-            break;
-
-        case 3:
-            barra.style.transform=
-            "translateX(-50%) rotate(8deg)";
-            break;
-
-        case 4:
-            barra.style.transform=
-            "translateX(-50%) rotate(15deg)";
-            break;
-
-        case 5:
-
-            barra.style.transform=
-            "translateX(-50%) rotate(22deg)";
-
-            document
-            .getElementById("mensaje")
-            .innerHTML=
-            "Esta representación muestra que el profesor tiene una responsabilidad mayor por su autoridad: debe cuidar, respetar los límites y evitar cualquier abuso de poder. La alumna tiene derecho a expresar sus límites y pedir apoyo, pero no es responsable de la conducta del profesor ni de mantener la relación en equilibrio.";
-
-            break;
-    }
+    document.getElementById("barra").style.transform =
+        `translateX(-50%) rotate(${angulo}deg)`;
 }
+
+function agregarObjetoDisponible(objeto){
+
+    const ficha = document.createElement("button");
+    ficha.className = "pieza";
+    ficha.type = "button";
+    ficha.draggable = true;
+    ficha.dataset.id = objeto.id;
+    const ladoCorrecto =
+        objeto.lado === "alumna" ? "de la alumna" : "del profesor";
+    ficha.setAttribute(
+        "aria-label",
+        `Colocar ${objeto.nombre} del lado ${ladoCorrecto}`
+    );
+
+    const imagen = document.createElement("img");
+    imagen.src = objeto.imagen;
+    imagen.alt = "";
+
+    const nombre = document.createElement("span");
+    nombre.textContent = objeto.nombre;
+
+    ficha.append(imagen, nombre);
+    ficha.addEventListener("click",()=>{
+        colocarObjeto(objeto.id, objeto.lado);
+    });
+    ficha.addEventListener("dragstart",event=>{
+        event.dataTransfer.setData("text/plain", objeto.id);
+        event.dataTransfer.effectAllowed = "move";
+    });
+
+    bandejaObjetos.appendChild(ficha);
+    objetosEnBandeja.set(objeto.id, ficha);
+}
+
+function permitirSoltar(event){
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+}
+
+function soltarObjeto(event, lado){
+    event.preventDefault();
+    colocarObjeto(event.dataTransfer.getData("text/plain"), lado);
+}
+
+[
+    [cubosAlumna, "alumna"],
+    [cubosProfesor, "profesor"]
+].forEach(([zona, lado])=>{
+    zona.addEventListener("dragover",event=>{
+        permitirSoltar(event);
+        zona.classList.add("drop-activo");
+    });
+    zona.addEventListener("dragleave",()=>{
+        zona.classList.remove("drop-activo");
+    });
+    zona.addEventListener("drop",event=>{
+        zona.classList.remove("drop-activo");
+        soltarObjeto(event,lado);
+    });
+});
+
+window.addEventListener("message",event=>{
+
+    if(
+        event.source !== window.parent ||
+        !event.data ||
+        event.data.type !== "puzzle5-inventory" ||
+        !Array.isArray(event.data.inventory)
+    ){
+        return;
+    }
+
+    const inventario = new Set(
+        event.data.inventory.filter(item=>typeof item === "string")
+    );
+    const objetosRecolectados = objetosDelAcertijo.filter(
+        objeto=>inventario.has(objeto.inventario)
+    );
+
+    objetosDelAcertijo.forEach(objeto=>{
+        if(
+            inventario.has(objeto.inventario) &&
+            !objetosColocados.has(objeto.id) &&
+            !objetosEnBandeja.has(objeto.id)
+        ){
+            agregarObjetoDisponible(objeto);
+        }
+    });
+
+    if(!objetosRecolectados.length){
+        estadoObjetos.textContent =
+            "Aún no has recolectado objetos. Explora las habitaciones y vuelve aquí.";
+    }else if(!objetosEnBandeja.size){
+        estadoObjetos.textContent = "Ya colocaste todos los objetos recolectados.";
+    }else{
+        estadoObjetos.textContent =
+            "Haz clic o arrastra cada objeto al lado indicado.";
+    }
+});
 
 </script>
 

@@ -14,6 +14,20 @@ body{
     font-family:Arial,sans-serif;
 }
 
+.objetoRecogible,
+.objetoCertificado,
+.objetoEstatua,
+.objetoMedalla{
+    visibility:hidden;
+}
+
+body.objetosDesbloqueados .objetoRecogible,
+body.objetosDesbloqueados .objetoCertificado,
+body.objetosDesbloqueados .objetoEstatua,
+body.objetosDesbloqueados .objetoMedalla{
+    visibility:visible;
+}
+
 /* PAREDES */
 
 .pared{
@@ -27,6 +41,70 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
+}
+
+.pared img.objetoCertificado,
+.pared img.objetoEstatua,
+.pared img.objetoMedalla{
+    position:absolute;
+    height:auto;
+    object-fit:contain;
+    z-index:1;
+}
+
+.pared img.objetoCertificado{
+    left:38%;
+    top:16.3%;
+    width:9.35%;
+}
+
+.pared img.objetoEstatua{
+    left:53.9%;
+    top:16.7%;
+    width:8.4%;
+}
+
+.pared img.objetoMedalla{
+    left:37.9%;
+    top:45.2%;
+    width:8.3%;
+    cursor:pointer;
+}
+
+.pared img.objetoCertificado,
+.pared img.objetoEstatua{
+    cursor:pointer;
+}
+
+.pared img.objetoRecogible{
+    position:absolute;
+    height:auto;
+    object-fit:contain;
+    z-index:2;
+    cursor:pointer;
+}
+
+#objetoChicaEscritorio{
+    left:61%;
+    top:48%;
+    width:8%;
+}
+
+#objetoChicaFriso{
+    left:64%;
+    top:22%;
+    width:8%;
+}
+
+#vistaCasilleros img.objetoRecogible{
+    position:absolute;
+    left:47.5%;
+    top:71%;
+    width:6.5%;
+    height:auto;
+    object-fit:contain;
+    z-index:2;
+    cursor:pointer;
 }
 
 /* SOLO PROFESOR */
@@ -115,6 +193,173 @@ body{
     width:130%;
     height:auto;
     max-width:none;
+}
+
+#computerPuzzleTrigger{
+    position:absolute;
+    left:47%;
+    top:29%;
+    width:17.2%;
+    height:19.5%;
+    z-index:1;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:transparent;
+    font-size:clamp(16px,2vw,26px);
+    font-weight:bold;
+    text-shadow:0 0 6px #000;
+    cursor:pointer;
+}
+
+#computerPuzzleTrigger.iniciar-visible{
+    color:#fff;
+    animation:parpadeoIniciar .8s steps(2,start) infinite;
+}
+
+@keyframes parpadeoIniciar{
+    50%{
+        opacity:0;
+    }
+}
+
+#computerPuzzleOverlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    z-index:60000;
+    background:#000;
+}
+
+#balancePuzzleOverlay{
+    position:fixed;
+    inset:0;
+    display:none;
+    z-index:60000;
+    background:#000;
+}
+
+#computerPuzzleFrame{
+    display:block;
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+#balancePuzzleFrame{
+    display:block;
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+#backComputerPuzzle{
+    position:absolute;
+    top:12px;
+    left:12px;
+    z-index:2;
+    width:80px;
+    height:80px;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    color:transparent;
+    font-size:0;
+    cursor:pointer;
+}
+
+#backBalancePuzzle{
+    position:absolute;
+    top:12px;
+    left:12px;
+    z-index:2;
+    width:80px;
+    height:80px;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:contain;
+    color:transparent;
+    font-size:0;
+    cursor:pointer;
+}
+
+#backComputerPuzzle:hover{
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar-hover.png");
+}
+
+#backBalancePuzzle:hover{
+    background-image:url("Assets_scaperoom/UI/Botones/boton-regresar-hover.png");
+}
+
+#backComputerPuzzle:focus-visible{
+    outline:2px solid white;
+    outline-offset:2px;
+}
+
+#backBalancePuzzle:focus-visible{
+    outline:2px solid white;
+    outline-offset:2px;
+}
+
+#balancePuzzleTrigger{
+    position:absolute;
+    left:37%;
+    top:36%;
+    width:26%;
+    height:22%;
+    z-index:2;
+    margin:0;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+}
+
+#balancePuzzleTrigger:focus-visible{
+    outline:2px solid white;
+    outline-offset:2px;
+}
+
+#exploracionPrompt{
+    position:fixed;
+    inset:0;
+    z-index:60001;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(0,0,0,.72);
+    color:#fff;
+    text-align:center;
+}
+
+#exploracionPrompt.visible{
+    display:flex;
+}
+
+#exploracionPrompt > div{
+    width:min(600px,100%);
+    padding:32px;
+    border:2px solid #fff;
+    border-radius:12px;
+    background:#252a31;
+    font-size:clamp(20px,3vw,30px);
+}
+
+#continuarExploracion{
+    margin-top:16px;
 }
 
 /* ESCRITORIO */
@@ -1471,6 +1716,15 @@ z-index:99999;
     </div>
 
     <div id="escritorioHover"></div>
+    <img
+        id="objetoChicaEscritorio"
+        class="objetoRecogible"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/chica-estatua.png"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/chica-estatua.png"
+        alt="Recoger estatua de chica"
+        role="button"
+        tabindex="0"
+    >
 
 </div>
 
@@ -1525,6 +1779,15 @@ z-index:99999;
         <button id="expandFrisoPuzzle" type="button">Ampliar</button>
         <button id="backFrisoPuzzle" type="button">Volver</button>
     </div>
+    <img
+        id="objetoChicaFriso"
+        class="objetoRecogible"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/escultura.png"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/escultura.png"
+        alt="Recoger escultura"
+        role="button"
+        tabindex="0"
+    >
 
 </div>
 
@@ -1557,6 +1820,11 @@ z-index:99999;
         src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-balance.png"
         alt="Balanza"
     >
+    <button
+        id="balancePuzzleTrigger"
+        type="button"
+        aria-label="Abrir el acertijo de la balanza"
+    ></button>
 </div>
 
 <div id="paredComputadora" class="pared">
@@ -1564,6 +1832,12 @@ z-index:99999;
         src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-computadora.png"
         alt="Computadora"
     >
+    <button
+        id="computerPuzzleTrigger"
+        class="iniciar-visible"
+        type="button"
+        aria-label="Iniciar el acertijo"
+    >Iniciar</button>
 </div>
 
 <div id="paredPuertaHabitacion2" class="pared">
@@ -1581,8 +1855,57 @@ z-index:99999;
 <div id="paredEstante" class="pared">
     <img
         src="Assets_scaperoom/Bocetos/Fondos/Habitacion2/habitacion2-estanteria-vacia.png"
-        alt="Estantería llena"
+        alt="Estantería vacía"
     >
+    <img
+        class="objetoCertificado"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/Certificado-objeto.png"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/Certificado-objeto.png"
+        alt="Certificado en la estantería"
+        role="button"
+        tabindex="0"
+    >
+    <img
+        class="objetoEstatua"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/profesor-estatua.png"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/profesor-estatua.png"
+        alt="Estatua del profesor en la estantería"
+        role="button"
+        tabindex="0"
+    >
+    <img
+        class="objetoMedalla"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/medalla.png"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/medalla.png"
+        alt="Medalla en la estantería"
+        role="button"
+        tabindex="0"
+    >
+</div>
+
+<div id="computerPuzzleOverlay" aria-hidden="true">
+    <iframe
+        id="computerPuzzleFrame"
+        src="Asertijos scaperoom HTML/Asertijo4.html"
+        title="Acertijo del laberinto"
+    ></iframe>
+    <button id="backComputerPuzzle" type="button" aria-label="Volver al juego"></button>
+</div>
+
+<div id="balancePuzzleOverlay" aria-hidden="true">
+    <iframe
+        id="balancePuzzleFrame"
+        src="Asertijos scaperoom HTML/Asertijo5.html"
+        title="Acertijo 5: Balanza de responsabilidad"
+    ></iframe>
+    <button id="backBalancePuzzle" type="button" aria-label="Volver al juego"></button>
+</div>
+
+<div id="exploracionPrompt" aria-hidden="true">
+    <div>
+        <p>Ahora explora las habitaciones y recoge los objetos.</p>
+        <button id="continuarExploracion" type="button">Continuar</button>
+    </div>
 </div>
 
 <!-- ESCRITORIO -->
@@ -1671,6 +1994,15 @@ alt="Fondo">
     >
 
     <div id="telefonoBtn"></div>
+    <img
+        id="objetoCelularRecogible"
+        class="objetoRecogible"
+        src="Assets_scaperoom/Bocetos/Objetos de los fondos/Celular-objeto.png"
+        data-inventario="Assets_scaperoom/Bocetos/Objetos de los fondos/Celular-objeto.png"
+        alt="Recoger teléfono"
+        role="button"
+        tabindex="0"
+    >
     <button id="mochilaBtn" aria-label="Revisar la mochila"></button>
     <button id="tijerasBtn" aria-label="Recoger las tijeras"></button>
 
@@ -1830,6 +2162,8 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
         <div class="slotInventario"></div>
         <div class="slotInventario"></div>
         <div class="slotInventario"></div>
+        <div class="slotInventario"></div>
+        <div class="slotInventario"></div>
 
     </div>
 
@@ -1897,6 +2231,35 @@ function agregarInventario(imagen){
     actualizarInventario();
 
 }
+
+function recogerObjeto(elemento){
+
+    if(elemento.dataset.recogido === "true"){
+        return;
+    }
+
+    elemento.dataset.recogido = "true";
+    elemento.style.display = "none";
+    agregarInventario(elemento.dataset.inventario);
+
+}
+
+document
+.querySelectorAll(".objetoRecogible, .objetoCertificado, .objetoEstatua, .objetoMedalla")
+.forEach(elemento=>{
+
+    elemento.addEventListener("click",()=>{
+        recogerObjeto(elemento);
+    });
+
+    elemento.addEventListener("keydown",event=>{
+        if(event.key === "Enter" || event.key === " "){
+            event.preventDefault();
+            recogerObjeto(elemento);
+        }
+    });
+
+});
 
 function actualizarInventario(){
 
@@ -2391,6 +2754,88 @@ frisoPuzzleTrigger.addEventListener("click",()=>{
     frisoPuzzleOverlay.setAttribute("aria-hidden","false");
     ajustarAcertijoFriso();
     requestAnimationFrame(ajustarEscalaAcertijoFriso);
+
+});
+
+const computerPuzzleTrigger =
+document.getElementById("computerPuzzleTrigger");
+
+const computerPuzzleOverlay =
+document.getElementById("computerPuzzleOverlay");
+
+computerPuzzleTrigger.addEventListener("click",()=>{
+
+    computerPuzzleOverlay.style.display="block";
+    computerPuzzleOverlay.setAttribute("aria-hidden","false");
+
+});
+
+document
+.getElementById("backComputerPuzzle")
+.addEventListener("click",()=>{
+
+    computerPuzzleOverlay.style.display="none";
+    computerPuzzleOverlay.setAttribute("aria-hidden","true");
+
+});
+
+const balancePuzzleOverlay =
+document.getElementById("balancePuzzleOverlay");
+
+const balancePuzzleFrame =
+document.getElementById("balancePuzzleFrame");
+
+document
+.getElementById("balancePuzzleTrigger")
+.addEventListener("click",()=>{
+
+    balancePuzzleOverlay.style.display="block";
+    balancePuzzleOverlay.setAttribute("aria-hidden","false");
+    balancePuzzleFrame.contentWindow.postMessage({
+        type:"puzzle5-inventory",
+        inventory:inventario.slice()
+    },"*");
+
+});
+
+document
+.getElementById("backBalancePuzzle")
+.addEventListener("click",()=>{
+
+    balancePuzzleOverlay.style.display="none";
+    balancePuzzleOverlay.setAttribute("aria-hidden","true");
+
+});
+
+window.addEventListener("message",(event)=>{
+
+    if(
+        event.source !== document.getElementById("computerPuzzleFrame").contentWindow ||
+        !event.data ||
+        event.data.type !== "puzzle4-comics-complete"
+    ){
+        return;
+    }
+
+    computerPuzzleOverlay.style.display="none";
+    computerPuzzleOverlay.setAttribute("aria-hidden","true");
+    document.body.classList.add("objetosDesbloqueados");
+
+    const exploracionPrompt =
+        document.getElementById("exploracionPrompt");
+    exploracionPrompt.classList.add("visible");
+    exploracionPrompt.setAttribute("aria-hidden","false");
+
+});
+
+document
+.getElementById("continuarExploracion")
+.addEventListener("click",()=>{
+
+    const exploracionPrompt =
+        document.getElementById("exploracionPrompt");
+    exploracionPrompt.classList.remove("visible");
+    exploracionPrompt.setAttribute("aria-hidden","true");
 
 });
 
