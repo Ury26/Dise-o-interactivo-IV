@@ -953,6 +953,19 @@ body.objetosDesbloqueados .objetoMedalla{
     z-index:65001;
 }
 
+.objeto-recogido-animacion{
+    position:fixed;
+    z-index:65002;
+    object-fit:contain;
+    pointer-events:none;
+    transition:
+        left .65s cubic-bezier(.2,.8,.2,1),
+        top .65s cubic-bezier(.2,.8,.2,1),
+        width .65s cubic-bezier(.2,.8,.2,1),
+        height .65s cubic-bezier(.2,.8,.2,1),
+        opacity .2s ease .45s;
+}
+
 .slotInventario{
 
     width:70px;
@@ -2103,7 +2116,11 @@ alt="Fondo">
         tabindex="0"
     >
     <button id="mochilaBtn" aria-label="Revisar la mochila"></button>
-    <button id="tijerasBtn" aria-label="Recoger las tijeras"></button>
+    <button
+        id="tijerasBtn"
+        data-inventario="https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/tijera.png"
+        aria-label="Recoger las tijeras"
+    ></button>
 
 </div>
 
@@ -2389,6 +2406,29 @@ function mostrarInventarioTemporal(){
 
 }
 
+function mostrarInventarioSiHayObjetoVisible(){
+
+    const objetoVisible = Array.from(
+        document.querySelectorAll("[data-inventario]")
+    ).some(elemento=>{
+        if(elemento.dataset.recogido === "true"){
+            return false;
+        }
+
+        const rectangulo = elemento.getBoundingClientRect();
+
+        return elemento.getClientRects().length > 0 &&
+            rectangulo.width > 0 &&
+            rectangulo.height > 0 &&
+            getComputedStyle(elemento).visibility !== "hidden";
+    });
+
+    if(objetoVisible){
+        mostrarInventarioTemporal();
+    }
+
+}
+
 function ocultarInventarioAlEntrarAcertijo(){
 
     ocultarInventario();
@@ -2398,6 +2438,7 @@ function ocultarInventarioAlEntrarAcertijo(){
 
 function mostrarBotonInventario(){
     botonInventario.style.display = "block";
+    mostrarInventarioSiHayObjetoVisible();
 }
 
 function agregarInventario(imagen){
@@ -2409,15 +2450,77 @@ function agregarInventario(imagen){
 
 }
 
+function animarObjetoAlInventario(imagen, origen, inicio, indice){
+
+    if(!origen){
+        return;
+    }
+
+    const posicionInicial = inicio || origen.getBoundingClientRect();
+
+    if(!posicionInicial.width || !posicionInicial.height){
+        return;
+    }
+
+    const objetoAnimado = document.createElement("img");
+    objetoAnimado.src = imagen;
+    objetoAnimado.className = "objeto-recogido-animacion";
+    objetoAnimado.alt = "";
+    objetoAnimado.setAttribute("aria-hidden","true");
+    objetoAnimado.style.left = `${posicionInicial.left}px`;
+    objetoAnimado.style.top = `${posicionInicial.top}px`;
+    objetoAnimado.style.width = `${posicionInicial.width}px`;
+    objetoAnimado.style.height = `${posicionInicial.height}px`;
+    document.body.appendChild(objetoAnimado);
+
+    setTimeout(()=>{
+        const espacios = document.querySelectorAll(".slotInventario");
+        const espacio = espacios[indice];
+        const destino = espacio
+            ? espacio.getBoundingClientRect()
+            : panelInventario.getBoundingClientRect();
+
+        objetoAnimado.style.left =
+            `${destino.left + (destino.width - 42) / 2}px`;
+        objetoAnimado.style.top =
+            `${destino.top + (destino.height - 42) / 2}px`;
+        objetoAnimado.style.width = "42px";
+        objetoAnimado.style.height = "42px";
+        objetoAnimado.style.opacity = "0";
+
+        setTimeout(()=>{
+            objetoAnimado.remove();
+        },700);
+    },850);
+
+}
+
+function posicionAnimacionEnCentro(elemento){
+
+    const rectangulo = elemento.getBoundingClientRect();
+    const tamaño = 48;
+
+    return {
+        left: rectangulo.left + (rectangulo.width - tamaño) / 2,
+        top: rectangulo.top + (rectangulo.height - tamaño) / 2,
+        width: tamaño,
+        height: tamaño
+    };
+
+}
+
 function recogerObjeto(elemento){
 
     if(elemento.dataset.recogido === "true"){
         return;
     }
 
+    const imagen = elemento.dataset.inventario;
+    const inicio = elemento.getBoundingClientRect();
     elemento.dataset.recogido = "true";
     elemento.style.display = "none";
-    agregarInventario(elemento.dataset.inventario);
+    agregarInventario(imagen);
+    animarObjetoAlInventario(imagen, elemento, inicio, inventario.length - 1);
 
 }
 
@@ -2596,6 +2699,7 @@ function mostrarPared(){
     });
 
     paredes[paredActual].style.display="block";
+    mostrarInventarioSiHayObjetoVisible();
 
 }
 
@@ -2742,8 +2846,16 @@ window.addEventListener("message",(event)=>{
     estado.llave = true;
     hoverPuerta.style.display = "block";
     puertaBtn.style.display = "block";
+    const imagenLlaveAzul =
+        "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/llave_azul.png";
     agregarInventario(
-        "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/llave_azul.png"
+        imagenLlaveAzul
+    );
+    animarObjetoAlInventario(
+        imagenLlaveAzul,
+        frisoPuzzleFrame,
+        posicionAnimacionEnCentro(frisoPuzzleFrame),
+        inventario.length - 1
     );
 
 });
@@ -3117,6 +3229,12 @@ window.addEventListener("message",(event)=>{
 
     estado.llaveAmarilla = true;
     agregarInventario(imagenLlaveAmarilla);
+    animarObjetoAlInventario(
+        imagenLlaveAmarilla,
+        balancePuzzleFrame,
+        posicionAnimacionEnCentro(balancePuzzleFrame),
+        inventario.length - 1
+    );
     puertaFinalBtn.style.display = "block";
 
 });
@@ -3129,6 +3247,7 @@ document
         document.getElementById("exploracionPrompt");
     exploracionPrompt.classList.remove("visible");
     exploracionPrompt.setAttribute("aria-hidden","true");
+    mostrarInventarioSiHayObjetoVisible();
 
 });
 
@@ -3182,6 +3301,7 @@ mochilaBtn.addEventListener("click",()=>{
     mochilaBtn.style.display="none";
     tijerasHover.style.display="block";
     tijerasBtn.style.display="block";
+    mostrarInventarioSiHayObjetoVisible();
 
 });
 
@@ -3192,8 +3312,15 @@ tijerasBtn.addEventListener("click",()=>{
     }
 
     estado.tijeras = true;
-    agregarInventario(
-        "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/tijera.png"
+    const imagenTijeras =
+        "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/Objetos de los fondos/tijera.png";
+    const inicioTijeras = tijerasBtn.getBoundingClientRect();
+    agregarInventario(imagenTijeras);
+    animarObjetoAlInventario(
+        imagenTijeras,
+        tijerasBtn,
+        inicioTijeras,
+        inventario.length - 1
     );
 
     hoverFriso.style.display="block";
@@ -3281,6 +3408,7 @@ hitboxCasilleros.addEventListener(
 
     paredes[paredActual].style.display =
     "none";
+    mostrarInventarioSiHayObjetoVisible();
 
     document.getElementById("izq")
     .style.display="none";
@@ -3783,7 +3911,7 @@ document.getElementById("homeImage").src =
 document.querySelectorAll(".imgVolver").forEach(boton => {
 
     boton.addEventListener("mousedown", () => {
-
+        
         boton.src =
         "https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/UI/Botones/boton-regresar-hover.png";
 
