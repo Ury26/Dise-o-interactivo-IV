@@ -16,10 +16,7 @@ body{
 }
 
 body{
-    background-image:url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3.png");
-    background-size:79%;
-    background-repeat:no-repeat;
-    background-position:top center;
+    background-image:none;
 }
 
 #status{
@@ -101,14 +98,19 @@ svg{
     width:1920px;
     height:1080px;
 
-    background-image:none;
+    background-image:url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3.png");
     background-color:transparent;
-    background-size:100% 100%;
+    background-size:79%;
     background-repeat:no-repeat;
+    background-position:top center;
 
     margin:0;
 
-    position:relative;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%) scale(var(--stage-scale, 1));
+    transform-origin:center;
 }
 
 #status{
@@ -130,13 +132,10 @@ svg{
 #pantallaDerrota{
     display:none;
 
-    position:fixed;
-
-    right:0;
-    top:0;
-
-    width:100vw;
-    height:100vh;
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
 
     z-index:5;
 
@@ -183,8 +182,8 @@ svg{
     pointer-events:none;
 }
 
-.hover-reiniciar-juego{
-    background-image:url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-hover.png") !important;
+body.hover-reiniciar-juego #gameContainer{
+    background-image:url("https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle3-gato-imposible/cuadricula-puzzle3-hover.png");
 }
 
 </style>
@@ -231,6 +230,18 @@ const statusElement = document.getElementById("status");
 const restartButton = document.getElementById("hotspotReiniciar");
 const keyPickupButton = document.getElementById("btnContinuar");
 const defeatScreen = document.getElementById("pantallaDerrota");
+const gameContainer = document.getElementById("gameContainer");
+
+function ajustarEscalaJuego(){
+    const scale = Math.min(
+        window.innerWidth / 1920,
+        window.innerHeight / 1080
+    );
+    gameContainer.style.setProperty("--stage-scale", scale);
+}
+
+window.addEventListener("resize", ajustarEscalaJuego);
+ajustarEscalaJuego();
 
 restartButton.addEventListener("click",()=>{
     restartButton.disabled = true;
@@ -533,6 +544,8 @@ function loseScreen(){
 createBoard();
 
 </script>
+
+<script src="../audio-relay.js"></script>
 
 </body>
 </html>

@@ -12,12 +12,15 @@ body{
     background:#ffffff;
     font-family:Verdana, sans-serif;
     text-align:center;
+    overflow:hidden;
 }
 
 #gameContainer{
-    width:1300px;
-    margin:10px auto;
-    position:relative;
+    position:absolute;
+    top:calc(50% + 90px);
+    left:50%;
+    width:min(1300px, calc(100vw - 20px), calc(177.78vh - 500px));
+    transform:translate(-50%, -50%);
 }
 
 #escena{
@@ -30,90 +33,100 @@ body{
 .board{
     position:absolute;
     display:grid;
-    grid-template-columns:repeat(2, 110px);
-    grid-template-rows:repeat(2, 70px);
-    gap:4px;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    grid-template-rows:repeat(2, minmax(0, 1fr));
+    gap:3px;
+    overflow:hidden;
 }
 
-/* Ajusta si lo necesitas */
+.puzzle-complete{
+    position:absolute;
+    display:block;
+    max-width:none;
+    object-fit:fill;
+    pointer-events:none;
+}
 
 #board1{
-    left:150px;
-    top:100px;
+    left:7.35%;
+    top:8.68%;
+    width:25.28%;
+    height:33.84%;
 }
 
 #board2{
-    left:560px;
-    top:120px;
+    left:38.82%;
+    top:8.73%;
+    width:25.81%;
+    height:35.59%;
 }
 
 #board3{
-    left:970px;
-    top:130px;
+    left:69.26%;
+    top:10.16%;
+    width:26.56%;
+    height:41.45%;
 }
 
 .slot{
-    width:110px;
-    height:70px;
-
     background:transparent;
-
-    border:none;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
-    text-align:center;
-
-    font-size:18px;
+    min-width:0;
+    min-height:0;
 }
 
 /* PIEZAS */
 
 #piecesPool{
-
-    margin-top:20px;
-
-    display:flex;
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:10px;
-
-    padding:20px;
-
-    background:white;
-
-    border-top:3px solid #ccc;
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(6, minmax(0, 1fr));
+    gap:6px;
+    width:min(660px, calc(100vw - 150px));
+    padding:8px;
+    box-sizing:border-box;
+    background:#f3f3f3;
+    border:2px solid #b8b8b8;
+    border-radius:10px;
+    box-shadow:0 3px 10px #0003;
 }
 
 .piece{
-
-    width:110px;
-    min-height:70x;
-
-    background:transparent;
-
-    border:none;
-
-    border-radius:0;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
-
-    padding:5px;
-
-    cursor:grab;
-
+    position:relative;
+    width:100%;
+    aspect-ratio:1.35;
+    border:2px solid white;
+    border-radius:6px;
+    box-shadow:0 2px 5px #0005;
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-size:var(--puzzle-background-size);
+    background-position:var(--puzzle-background-position);
     box-sizing:border-box;
+    cursor:grab;
+    transition:transform .15s, box-shadow .15s;
+}
 
-    font-size:18px;
+.piece:hover{
+    z-index:1;
+    transform:scale(1.04);
+    box-shadow:0 3px 8px #0007;
+}
+
+.slot .piece{
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    border:1px solid white;
+    border-radius:5px;
+    box-shadow:0 0 3px #0008;
+    cursor:grab;
 }
 
 /* NUMEROS */
@@ -124,82 +137,101 @@ body{
 
     position:absolute;
 
-    font-size:60px;
+    font-size:clamp(24px,3.8vw,48px);
     font-weight:bold;
 
     color:green;
 }
 
 #num1{
-    left:180px;
-    top:340px;
+    left:14%;
+    top:45%;
 }
 
 #num2{
-    left:560px;
-    top:340px;
+    left:46%;
+    top:45%;
 }
 
 #num3{
-    left:930px;
-    top:340px;
+    left:77%;
+    top:45%;
 }
 
 #codigo{
 
     display:none;
 
-    margin-top:20px;
-
-    font-size:60px;
-
+    position:absolute;
+    left:50%;
+    top:-28px;
+    transform:translateX(-50%);
+    font-size:clamp(16px,2vw,30px);
     font-weight:bold;
-
     color:green;
+    background:white;
+    padding:4px 12px;
+    border:2px solid green;
+    border-radius:15px;
+    white-space:nowrap;
+    z-index:5;
 }
 
 .pista{
 
     position:absolute;
-
-    width:260px;
-
+    top:calc(100% - 4%);
+    width:26vw;
+    max-width:340px;
     text-align:center;
-
     font-family:"Trebuchet MS", sans-serif;
-
-    font-size:22px;
-
+    font-size:clamp(12px,1.45vw,18px);
     font-weight:bold;
-
     color:#222;
 
 }
 
 #pista1{
-    left:100px;
-    top:680px;
-    width:400px;
-
-    padding-left:20px;
-    padding-right:20px;
-
-    box-sizing:border-box;
+    left:5%;
 }
 
 #pista2{
-    left:550px;
-    top:680px;
+    left:37%;
 }
 
 #pista3{
-    left:900px;
-    top:680px;
+    left:69%;
+}
+
+@media (max-width:700px){
+    #piecesPool{
+        top:62px;
+        width:min(560px, calc(100vw - 16px));
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+    }
+
+    #gameContainer{
+        top:400px;
+        width:min(1300px, calc(100vw - 20px), calc(178vh - 800px));
+    }
+}
+
+@media (max-width:480px){
+    #piecesPool{
+        width:calc(100vw - 16px);
+    }
+
+    #gameContainer{
+        top:280px;
+        width:calc(100vw - 20px);
+    }
 }
 
 </style>
 </head>
 <body>
+
+<div id="piecesPool"></div>
 
 <div id="gameContainer">
 
@@ -216,6 +248,10 @@ alt="Fondo">
 <div id="num2" class="number">7</div>
 <div id="num3" class="number">9</div>
 
+<div id="codigo">
+🔓 CÓDIGO: 479
+</div>
+
 <div id="pista1" class="pista">
     Comunicación por medios no institucionales
 </div>
@@ -230,12 +266,6 @@ alt="Fondo">
 
 </div>
 
-<div id="piecesPool"></div>
-
-<div id="codigo">
-🔓 CÓDIGO: 479
-</div>
-
 <script>
 
 const puzzles = [
@@ -243,34 +273,22 @@ const puzzles = [
 {
 board:"board1",
 number:"num1",
-frases:[
-"¿No les parece raro",
-"que sea la única",
-"clase con grupo",
-"de WhatsApp?"
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-3-whatsapp.png",
+crop:{x:244,y:129,width:1180,height:910}
 },
 
 {
 board:"board2",
 number:"num2",
-frases:[
-"No lo sé, pero",
-"me regaló un sándwich.",
-"¡Qué buena",
-"onda!"
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-2-snadwich.png",
+crop:{x:241,y:113,width:1204,height:944}
 },
 
 {
 board:"board3",
 number:"num3",
-frases:[
-"Me dio la impresión",
-"de que tiene",
-"preferencia por",
-"las alumnas."
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-3-preferencia-alumnas-pensamientos.png",
+crop:{x:242,y:66,width:1240,height:1092}
 }
 
 ];
@@ -307,11 +325,23 @@ slot.addEventListener("drop",e=>{
 
 e.preventDefault();
 
+if(board.classList.contains("completado")){
+return;
+}
+
 const id=e.dataTransfer.getData("pieza");
 
 const pieza=document.getElementById(id);
 
+if(!pieza || !pieza.classList.contains("piece")){
+return;
+}
+
 const origen=pieza.parentElement;
+
+if(!origen){
+return;
+}
 
 if(slot.children.length===0){
 
@@ -327,7 +357,7 @@ slot.appendChild(pieza);
 
 }
 
-revisarPuzzle(puzzle);
+revisarPuzzle(puzzle,index);
 
 });
 
@@ -339,8 +369,9 @@ let piezas=[];
 for(let i=0;i<4;i++){
 
 piezas.push({
-texto:puzzle.frases[i],
-correcta:i
+correcta:i,
+columna:i%2,
+fila:Math.floor(i/2)
 });
 
 }
@@ -353,13 +384,34 @@ const div=document.createElement("div");
 
 div.className="piece";
 
-div.textContent=pieza.texto;
-
 div.draggable=true;
 
 div.dataset.correct=pieza.correcta;
+div.dataset.puzzle=index;
 
 div.id="pieza_"+index+"_"+pieza.correcta;
+div.setAttribute("aria-label","Pieza "+(pieza.correcta+1)+" del diálogo");
+
+const anchoImagen=1747;
+const altoImagen=2030;
+const escalaX=2*anchoImagen/puzzle.crop.width;
+const escalaY=2*altoImagen/puzzle.crop.height;
+const posicionX=100*(
+    (puzzle.crop.x/anchoImagen)*escalaX+pieza.columna
+)/(escalaX-1);
+const posicionY=100*(
+    (puzzle.crop.y/altoImagen)*escalaY+pieza.fila
+)/(escalaY-1);
+
+div.style.backgroundImage='url("'+puzzle.image+'")';
+div.style.setProperty(
+    "--puzzle-background-size",
+    (escalaX*100)+"% "+(escalaY*100)+"%"
+);
+div.style.setProperty(
+    "--puzzle-background-position",
+    posicionX+"% "+posicionY+"%"
+);
 
 div.addEventListener("dragstart",e=>{
 
@@ -378,39 +430,40 @@ document
 
 }
 
-function revisarPuzzle(puzzle){
+function revisarPuzzle(puzzle,index){
 
-const slots=document.querySelectorAll(
-"#"+puzzle.board+" .slot"
-);
+const board=document.getElementById(puzzle.board);
+const slots=board.querySelectorAll(".slot");
 
-let correcto=true;
+const correcto=Array.from(slots).every((slot,pos)=>{
 
-slots.forEach((slot,pos)=>{
+const pieza=slot.firstElementChild;
 
-if(slot.children.length===0){
-
-correcto=false;
-return;
-}
-
-const pieza=slot.children[0];
-
-if(Number(pieza.dataset.correct)!==pos){
-
-correcto=false;
-}
+return pieza &&
+    Number(pieza.dataset.puzzle)===index &&
+    Number(pieza.dataset.correct)===pos;
 
 });
 
-if(correcto){
-
-document.getElementById(
-puzzle.number
-).style.display="block";
-
-comprobarFinal();
+if(!correcto){
+return;
 }
+
+const imagenCompleta=document.createElement("img");
+imagenCompleta.className="puzzle-complete";
+imagenCompleta.src=puzzle.image;
+imagenCompleta.alt="Diálogo completo";
+imagenCompleta.draggable=false;
+imagenCompleta.style.width=(1747/puzzle.crop.width*100)+"%";
+imagenCompleta.style.height=(2030/puzzle.crop.height*100)+"%";
+imagenCompleta.style.left=-(puzzle.crop.x/puzzle.crop.width*100)+"%";
+imagenCompleta.style.top=-(puzzle.crop.y/puzzle.crop.height*100)+"%";
+
+board.classList.add("completado");
+board.replaceChildren(imagenCompleta);
+
+document.getElementById(puzzle.number).style.display="block";
+comprobarFinal();
 
 }
 
@@ -447,7 +500,9 @@ const id=e.dataTransfer.getData("pieza");
 
 const pieza=document.getElementById(id);
 
+if(pieza && pieza.classList.contains("piece")){
 pool.appendChild(pieza);
+}
 
 });
 

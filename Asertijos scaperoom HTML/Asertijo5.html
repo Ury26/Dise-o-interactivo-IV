@@ -253,7 +253,7 @@ h1{
 
 #estadoObjetos{
     margin:0 0 6px;
-    font-size:13px;
+    font-size:18px;
     text-align:left;
 }
 
@@ -264,6 +264,15 @@ h1{
     min-height:84px;
     max-height:94px;
     overflow-x:auto;
+}
+
+#bandejaObjetos:empty{
+    display:none;
+}
+
+#zonaObjetos:has(#bandejaObjetos:empty){
+    width:fit-content;
+    max-width:min(700px, calc(100vw - 124px));
 }
 
 .pieza{
@@ -332,6 +341,103 @@ h1{
         width:min(340px, 100%);
         margin:120px auto 20px;
         font-size:16px;
+    }
+}
+
+@media(max-height:800px){
+    body{
+        padding:12px;
+        overflow:hidden;
+    }
+
+    #zonaObjetos{
+        top:12px;
+        left:12px;
+        width:min(560px, calc(100vw - 24px));
+    }
+
+    #estadoObjetos{
+        font-size:clamp(16px, 1.3vw, 18px);
+    }
+
+    #zonaObjetos:has(#bandejaObjetos:empty){
+        left:12px;
+        max-width:calc(100vw - 24px);
+    }
+
+    #bandejaObjetos{
+        min-height:60px;
+        max-height:68px;
+        gap:6px;
+    }
+
+    .pieza{
+        flex-basis:76px;
+        min-height:56px;
+        padding:2px;
+    }
+
+    .pieza img{
+        width:38px;
+        height:38px;
+    }
+
+    h1{
+        position:absolute;
+        top:150px;
+        left:50%;
+        margin:0;
+        transform:translateX(-50%);
+        font-size:clamp(20px, 2.5vw, 30px);
+    }
+
+    #game{
+        display:flex;
+        flex-direction:column;
+        justify-content:flex-start;
+        height:calc(100vh - 24px);
+        box-sizing:border-box;
+        padding-top:190px;
+    }
+
+    .balance-layout{
+        flex:1;
+        min-height:0;
+        margin:0 auto;
+        gap:4px;
+    }
+
+    .balance-visual{
+        align-self:center;
+        width:min(820px, 100%);
+        height:32vh;
+        left:auto;
+        padding-top:12px;
+        transform:none;
+    }
+
+    .balanza-container{
+        height:100%;
+        transform:none;
+    }
+
+    .barra{
+        width:min(700px, 100%, 98vh);
+    }
+
+    .personas{
+        top:12px;
+    }
+
+    #mensaje{
+        width:min(340px, 100%);
+        min-height:0;
+        height:22vh;
+        max-height:calc(100vh - 210px);
+        margin:0 auto 8px;
+        padding:12px 16px;
+        overflow-y:auto;
+        font-size:clamp(12px, 1.2vw, 15px);
     }
 }
 </style>
@@ -643,6 +749,8 @@ window.addEventListener("message",event=>{
 });
 
 </script>
+
+<script src="../audio-relay.js"></script>
 
 </body>
 </html>

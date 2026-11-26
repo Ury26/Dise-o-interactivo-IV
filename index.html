@@ -18,6 +18,13 @@ body{
     font-family:Arial,sans-serif;
 }
 
+#juego{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    background:#000;
+}
+
 .objetoRecogible,
 .objetoCertificado,
 .objetoEstatua,
@@ -35,16 +42,18 @@ body.objetosDesbloqueados .objetoMedalla{
 /* PAREDES */
 
 .pared{
-    position:relative;
-    width:100vw;
-    height:100vh;
+    position:absolute;
+    inset:0;
+    margin:auto;
+    width:min(100vw, 177.7778vh);
+    height:min(100vh, 56.25vw);
     display:none;
 }
 
 .pared img{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:fill;
 }
 
 .pared img.objetoCertificado,
@@ -385,6 +394,40 @@ body.objetosDesbloqueados .objetoMedalla{
 
 #continuarExploracion{
     margin-top:16px;
+    width:min(17.11vw,30.42vh,329px);
+    height:auto;
+    min-height:0;
+    aspect-ratio:365 / 205;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background-color:transparent;
+    background-image:url("Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo.png");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    box-shadow:none;
+    color:#252a31;
+    font-size:clamp(1.25rem,2.5vw,1.75rem);
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#continuarExploracion:hover{
+    transform:translateY(-2px);
+    background-color:transparent;
+    background-image:url("Assets_scaperoom/Bocetos/puzzle4-laberinto/boton-amarillo-hover.png");
+    box-shadow:none;
+}
+
+#continuarExploracion:active{
+    transform:translateY(1px);
+    box-shadow:none;
+}
+
+#continuarExploracion:focus-visible{
+    outline:3px solid white;
+    outline-offset:3px;
 }
 
 /* ESCRITORIO */
@@ -395,11 +438,10 @@ body.objetosDesbloqueados .objetoMedalla{
 
     position:absolute;
 
-    top:0;
-    left:0;
-
-    width:100vw;
-    height:100vh;
+    inset:0;
+    margin:auto;
+    width:min(100vw, 177.7778vh);
+    height:min(100vh, 56.25vw);
 }
 
 #vistaEscritorio img{
@@ -407,7 +449,7 @@ body.objetosDesbloqueados .objetoMedalla{
     width:100%;
     height:100%;
 
-    object-fit:cover;
+    object-fit:fill;
 }
 
 #volver{
@@ -446,15 +488,13 @@ body.objetosDesbloqueados .objetoMedalla{
 }
 
 #izq{
-
-    left:20px;
+    left:clamp(12px, calc((100vw - 177.7778vh) / 2 + 20px), 20vw);
 
     transform:translateY(-50%);
 }
 
 #der{
-
-    right:20px;
+    right:clamp(12px, calc((100vw - 177.7778vh) / 2 + 20px), 20vw);
 
     transform:translateY(-50%);
 }
@@ -462,7 +502,7 @@ body.objetosDesbloqueados .objetoMedalla{
 #imgIzq,
 #imgDer{
 
-    width:70px;
+    width:clamp(44px, 5vw, 70px);
 
     height:auto;
 
@@ -475,11 +515,10 @@ body.objetosDesbloqueados .objetoMedalla{
 
     position:absolute;
 
-    top:0;
-    left:0;
-
-    width:100vw;
-    height:100vh;
+    inset:0;
+    margin:auto;
+    width:min(100vw, 177.7778vh);
+    height:min(100vh, 56.25vw);
 }
 
 #vistaCasilleros img{
@@ -487,15 +526,15 @@ body.objetosDesbloqueados .objetoMedalla{
     width:100%;
     height:100%;
 
-    object-fit:cover;
+    object-fit:fill;
 }
 
 #volverCasilleros{
 
     position:absolute;
 
-    top:20px;
-    left:20px;
+    top:clamp(10px, 2vh, 20px);
+    left:clamp(10px, 2vw, 20px);
 
     z-index:5000;
 
@@ -514,7 +553,7 @@ body.objetosDesbloqueados .objetoMedalla{
     width:100%;
     height:100%;
 
-    object-fit:cover;
+    object-fit:fill;
 
     opacity:0;
 
@@ -587,12 +626,12 @@ body.objetosDesbloqueados .objetoMedalla{
     position:absolute;
     z-index:2;
     margin:0;
-    padding:8px 14px;
+    padding:10px 18px;
     border:2px solid white;
-    border-radius:6px;
+    border-radius:8px;
     background:#000;
     color:white;
-    font-size:16px;
+    font-size:18px;
     cursor:pointer;
 }
 
@@ -605,8 +644,8 @@ body.objetosDesbloqueados .objetoMedalla{
     display:none;
     top:12px;
     left:12px;
-    width:80px;
-    height:80px;
+    width:clamp(48px, 6vw, 80px);
+    height:clamp(48px, 6vw, 80px);
     padding:0;
     border:0;
     border-radius:0;
@@ -675,12 +714,12 @@ body.objetosDesbloqueados .objetoMedalla{
 
     position:absolute;
 
-    bottom:25px;
+    bottom:clamp(12px, 3vh, 25px);
 
-    right:25px;
+    right:clamp(12px, 3vw, 25px);
 
-    width:70px;
-    height:70px;
+    width:clamp(48px, 5vw, 70px);
+    height:clamp(48px, 5vw, 70px);
 
     padding:0;
     border:0;
@@ -710,14 +749,15 @@ body.objetosDesbloqueados .objetoMedalla{
     background:white;
 
     z-index:8000;
+    overflow:hidden;
 }
 
 #volverAcertijo1{
 
     position:absolute;
 
-    top:20px;
-    left:20px;
+    top:clamp(10px, 2vh, 20px);
+    left:clamp(10px, 2vw, 20px);
 
     z-index:9000;
 
@@ -727,9 +767,12 @@ body.objetosDesbloqueados .objetoMedalla{
 }
 
 #gameContainer{
-    width:1300px;
-    margin:10px auto;
-    position:relative;
+    position:absolute;
+    top:calc(50% + 90px);
+    left:50%;
+    width:min(1300px, calc(100vw - 20px), calc(177.78vh - 500px));
+    margin:0;
+    transform:translate(-50%, -50%);
 }
 
 #escena{
@@ -742,90 +785,100 @@ body.objetosDesbloqueados .objetoMedalla{
 .board{
     position:absolute;
     display:grid;
-    grid-template-columns:repeat(2, 110px);
-    grid-template-rows:repeat(2, 70px);
-    gap:4px;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    grid-template-rows:repeat(2, minmax(0, 1fr));
+    gap:3px;
+    overflow:hidden;
 }
 
-/* Ajusta si lo necesitas */
+.puzzle-complete{
+    position:absolute;
+    display:block;
+    max-width:none;
+    object-fit:fill;
+    pointer-events:none;
+}
 
 #board1{
-    left:150px;
-    top:100px;
+    left:7.35%;
+    top:8.68%;
+    width:25.28%;
+    height:33.84%;
 }
 
 #board2{
-    left:560px;
-    top:120px;
+    left:38.82%;
+    top:8.73%;
+    width:25.81%;
+    height:35.59%;
 }
 
 #board3{
-    left:970px;
-    top:130px;
+    left:69.26%;
+    top:10.16%;
+    width:26.56%;
+    height:41.45%;
 }
 
 .slot{
-    width:110px;
-    height:70px;
-
     background:transparent;
-
-    border:none;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
-    text-align:center;
-
-    font-size:18px;
+    min-width:0;
+    min-height:0;
 }
 
 /* PIEZAS */
 
 #piecesPool{
-
-    margin-top:20px;
-
-    display:flex;
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:10px;
-
-    padding:20px;
-
-    background:white;
-
-    border-top:3px solid #ccc;
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(6, minmax(0, 1fr));
+    gap:6px;
+    width:min(660px, calc(100vw - 150px));
+    padding:8px;
+    box-sizing:border-box;
+    background:#f3f3f3;
+    border:2px solid #b8b8b8;
+    border-radius:10px;
+    box-shadow:0 3px 10px #0003;
 }
 
 .piece{
-
-    width:110px;
-    min-height:70x;
-
-    background:transparent;
-
-    border:none;
-
-    border-radius:0;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
-
-    padding:5px;
-
-    cursor:grab;
-
+    position:relative;
+    width:100%;
+    aspect-ratio:1.35;
+    border:2px solid white;
+    border-radius:6px;
+    box-shadow:0 2px 5px #0005;
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-size:var(--puzzle-background-size);
+    background-position:var(--puzzle-background-position);
     box-sizing:border-box;
+    cursor:grab;
+    transition:transform .15s, box-shadow .15s;
+}
 
-    font-size:18px;
+.piece:hover{
+    z-index:1;
+    transform:scale(1.04);
+    box-shadow:0 3px 8px #0007;
+}
+
+.slot .piece{
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    border:1px solid white;
+    border-radius:5px;
+    box-shadow:0 0 3px #0008;
+    cursor:grab;
 }
 
 /* NUMEROS */
@@ -836,91 +889,93 @@ body.objetosDesbloqueados .objetoMedalla{
 
     position:absolute;
 
-    font-size:60px;
+    font-size:clamp(24px,3.8vw,48px);
     font-weight:bold;
 
     color:green;
 }
 
 #num1{
-    left:180px;
-    top:340px;
+    left:14%;
+    top:45%;
 }
 
 #num2{
-    left:560px;
-    top:340px;
+    left:46%;
+    top:45%;
 }
 
 #num3{
-    left:930px;
-    top:340px;
+    left:77%;
+    top:45%;
 }
 
 #codigo{
 
     display:none;
 
-    position:fixed;
-
+    position:absolute;
     left:50%;
-    top:90%;
-
-    transform:translate(-50%, -50%);
-
-    font-size:60px;
+    top:-28px;
+    transform:translateX(-50%);
+    font-size:clamp(16px,2vw,30px);
     font-weight:bold;
-
     color:green;
-
     background:white;
-
-    padding:20px 40px;
-
-    border:3px solid green;
-
+    padding:4px 12px;
+    border:2px solid green;
     border-radius:15px;
-
-    z-index:10000;
+    white-space:nowrap;
+    z-index:5;
 }
 
 .pista{
 
     position:absolute;
-
-    width:260px;
-
+    top:calc(100% - 4%);
+    width:26vw;
+    max-width:340px;
     text-align:center;
-
     font-family:"Trebuchet MS", sans-serif;
-
-    font-size:22px;
-
+    font-size:clamp(12px,1.45vw,18px);
     font-weight:bold;
-
     color:#222;
-
 }
 
 #pista1{
-    left:100px;
-    top:680px;
-    width:400px;
-
-    padding-left:20px;
-    padding-right:20px;
-
-    box-sizing:border-box;
+    left:5%;
 }
 
 #pista2{
-    left:550px;
-    top:680px;
+    left:37%;
 }
 
 #pista3{
-    left:900px;
-    top:680px;
+    left:69%;
+}
+
+@media (max-width:700px){
+    #piecesPool{
+        top:62px;
+        width:min(560px, calc(100vw - 16px));
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+    }
+
+    #gameContainer{
+        top:400px;
+        width:min(1300px, calc(100vw - 20px), calc(178vh - 800px));
+    }
+}
+
+@media (max-width:480px){
+    #piecesPool{
+        width:calc(100vw - 16px);
+    }
+
+    #gameContainer{
+        top:280px;
+        width:calc(100vw - 20px);
+    }
 }
 
 #inventario{
@@ -932,7 +987,7 @@ body.objetosDesbloqueados .objetoMedalla{
 
     width:100%;
 
-    height:90px;
+    height:clamp(76px, 13vh, 90px);
 
     background:rgba(0,0,0,.9);
 
@@ -942,11 +997,13 @@ body.objetosDesbloqueados .objetoMedalla{
 
     align-items:center;
 
-    gap:15px;
+    gap:clamp(6px, 1vw, 15px);
 
     z-index:15000;
 
     transition:bottom .85s ease-in-out;
+    box-sizing:border-box;
+    padding:6px;
 }
 
 #inventario.inventario-temporal{
@@ -968,8 +1025,9 @@ body.objetosDesbloqueados .objetoMedalla{
 
 .slotInventario{
 
-    width:70px;
-    height:70px;
+    width:clamp(42px, 5vw, 70px);
+    height:clamp(42px, 5vw, 70px);
+    flex:0 0 auto;
 
     border:2px solid white;
 
@@ -992,13 +1050,13 @@ body.objetosDesbloqueados .objetoMedalla{
 
     color:white;
 
-    font-size:20px;
+    font-size:clamp(12px, 1.5vw, 20px);
 
     font-weight:bold;
 
-    margin-bottom:10px;
+    margin-bottom:clamp(3px, .7vh, 10px);
 
-    letter-spacing:2px;
+    letter-spacing:clamp(0px, .15vw, 2px);
 }
 
 #contenedorInventario{
@@ -1009,7 +1067,7 @@ body.objetosDesbloqueados .objetoMedalla{
 
     align-items:center;
 
-    gap:15px;
+    gap:clamp(6px, 1vw, 15px);
 }
 
 #btnInventario{
@@ -1018,7 +1076,7 @@ body.objetosDesbloqueados .objetoMedalla{
 
     bottom:20px;
 
-    right:20px;
+    right:clamp(10px, 2vw, 20px);
 
     background:none;
 
@@ -1033,10 +1091,47 @@ body.objetosDesbloqueados .objetoMedalla{
 
 #imgInventario{
 
-    width:50px;
+    width:clamp(38px, 4vw, 50px);
     height:auto;
 
     display:block;
+}
+
+#audioToggle{
+    position:fixed;
+    left:14px;
+    bottom:14px;
+    z-index:65010;
+    display:grid;
+    width:48px;
+    height:48px;
+    min-width:44px;
+    min-height:44px;
+    place-items:center;
+    padding:0;
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:50%;
+    background:rgba(37,42,49,.92);
+    color:white;
+    font-size:26px;
+    line-height:1;
+    box-shadow:0 3px 8px rgba(0,0,0,.4);
+    cursor:pointer;
+}
+
+#audioToggle:hover{
+    transform:translateY(-2px);
+    background:#41515d;
+}
+
+#audioToggle:focus-visible{
+    outline:3px solid #ffd653;
+    outline-offset:3px;
+}
+
+#audioToggle:disabled{
+    opacity:.65;
+    cursor:not-allowed;
 }
 
 #menuInicio{
@@ -1151,7 +1246,7 @@ body.objetosDesbloqueados .objetoMedalla{
     width:100vw;
     height:100vh;
     background:white;
-    z-index:9000;
+    z-index:40000;
     justify-content:center;
     align-items:center;
 }
@@ -1243,8 +1338,10 @@ body.objetosDesbloqueados .objetoMedalla{
 
 
 .phone{
-width:360px;
-height:700px;
+width:min(640px, 49vh, calc(100vw - 32px));
+aspect-ratio:360 / 700;
+height:auto;
+container-type:inline-size;
 background:none;
 border:none;
 border-radius:0;
@@ -1292,12 +1389,12 @@ border-radius:8px;
 #unlockBtn{
 position:absolute;
 
-top:370px;
+top:52.86%;
 left:50%;
 transform:translateX(-50%);
 
-width:120px;
-height:45px;
+width:33.33%;
+height:6.43%;
 
 background:transparent;
 border:none;
@@ -1311,16 +1408,16 @@ font-weight:bold;
 #pin{
 position:absolute;
 
-top:280px;
+top:40%;
 left:50%;
 transform:translateX(-50%);
 
-width:140px;
-height:40px;
+width:38.89%;
+height:5.71%;
 box-sizing:border-box;
 padding:0;
 
-font-size:24px;
+font-size:clamp(16px, 6.67cqi, 40px);
 text-align:center;
 
 background:transparent;
@@ -1333,17 +1430,17 @@ color:black;
 /* HOME */
 
 .homeHeader{
-padding:15px;
+padding:4.2%;
 text-align:center;
 font-weight:bold;
-font-size:18px;
+font-size:clamp(13px, 5cqi, 28px);
 }
 
 .icons{
 display:flex;
-gap:30px;
+gap:8.33%;
 justify-content:center;
-margin-top:70px;
+margin-top:19.44%;
 }
 
 .icon{
@@ -1352,8 +1449,9 @@ cursor:pointer;
 }
 
 .iconCircle{
-width:70px;
-height:70px;
+width:clamp(50px, 19.44vw, 70px);
+height:auto;
+aspect-ratio:1;
 border-radius:18px;
 display:flex;
 justify-content:center;
@@ -1361,7 +1459,7 @@ align-items:center;
 margin:auto;
 margin-bottom:8px;
 color:white;
-font-size:28px;
+font-size:clamp(20px, 7.78cqi, 40px);
 }
 
 .team{
@@ -1377,23 +1475,25 @@ background:#25D366;
 .topbar{
 background:#128C7E;
 color:white;
-padding:15px;
+padding:4.17cqi;
+font-size:clamp(14px, 4.44cqi, 24px);
 font-weight:bold;
 }
 
 .chat{
-height:520px;
+height:74.29%;
 overflow-y:auto;
 background:#ece5dd;
-padding:12px;
+padding:3.33cqi;
 color:black;
+font-size:clamp(12px, 4.44cqi, 22px);
 }
 
 .msg{
 max-width:85%;
-margin-bottom:12px;
-padding:10px;
-border-radius:12px;
+margin-bottom:3.33cqi;
+padding:2.78cqi;
+border-radius:3.33cqi;
 }
 
 .student{
@@ -1407,8 +1507,11 @@ margin-left:auto;
 
 .phrase{
 cursor:pointer;
-padding:2px 4px;
-border-radius:4px;
+max-width:100%;
+padding:.56cqi 1.11cqi;
+border-radius:1.11cqi;
+overflow-wrap:anywhere;
+line-height:1.2;
 transition:.2s;
 }
 
@@ -1419,42 +1522,49 @@ background:#fff2a6;
 .phrase.selected{
 background:#ffe28a;
 text-decoration:underline;
+text-decoration-thickness:.06em;
+text-underline-offset:.08em;
+text-decoration-skip-ink:auto;
 font-weight:bold;
 }
 
 .phrase.reveal{
 background:#ffb3b3;
 text-decoration:underline;
+text-decoration-thickness:.06em;
+text-underline-offset:.08em;
+text-decoration-skip-ink:auto;
 font-weight:bold;
 }
 
 .footer{
 background:white;
-padding:10px;
+padding:2.78cqi;
 border-top:1px solid #ccc;
 }
 
 #result{
-margin-top:10px;
+margin-top:2.78cqi;
 color:black;
 }
 
 .explanation{
 background:#fff3cd;
-padding:10px;
-border-radius:8px;
-font-size:14px;
+padding:2.78cqi;
+border-radius:2.22cqi;
+font-size:clamp(11px, 3.89cqi, 21px);
 line-height:1.4;
-max-height:250px;
+max-height:50%;
 overflow-y:auto;
+overflow-wrap:anywhere;
 }
 
 .systemMessage{
 background:white;
-padding:10px;
-border-radius:12px;
-margin-top:15px;
-border-left:4px solid #128C7E;
+padding:2.78cqi;
+border-radius:3.33cqi;
+margin-top:4.17cqi;
+border-left:1.11cqi solid #128C7E;
 color:black;
 }
 /* POPUP */
@@ -1472,16 +1582,16 @@ z-index:5000;
 
 .popupContent{
 background:white;
-padding:20px;
-border-radius:12px;
+padding:5.56cqi;
+border-radius:3.33cqi;
 width:80%;
 text-align:center;
 color:black;
 }
 
 .popupContent button{
-margin-top:10px;
-padding:8px 16px;
+margin-top:2.78cqi;
+padding:2.22cqi 4.44cqi;
 }
 
 #homeScreen{
@@ -1502,11 +1612,11 @@ display:block;
 position:absolute;
 
 /* AJUSTAR */
-top:140px;
-left:70px;
+top:20%;
+left:19.44%;
 
-width:80px;
-height:80px;
+width:22.22%;
+height:11.43%;
 
 background:transparent;
 border:none;
@@ -1517,11 +1627,11 @@ cursor:pointer;
 position:absolute;
 
 /* AJUSTAR */
-top:140px;
-left:160px;
+top:20%;
+left:44.44%;
 
-width:80px;
-height:80px;
+width:22.22%;
+height:11.43%;
 
 background:transparent;
 border:none;
@@ -1541,10 +1651,10 @@ pointer-events:none;
 
 #popupOkBtn{
 position:absolute;
-top:340px;
-left:130px;
-width:90px;
-height:40px;
+top:48.57%;
+left:36.11%;
+width:25%;
+height:5.71%;
 
 background:transparent;
 opacity:.5;
@@ -1573,22 +1683,23 @@ object-fit:cover;
 #feedbackText{
 position:absolute;
 
-top:155px;
+top:22.14%;
 left:50%;
 transform:translateX(-50%);
 
-width:280px;
-height:500px;
-max-height:calc(100% - 165px);
+width:77.78%;
+height:71.43%;
 box-sizing:border-box;
-padding:16px 18px;
+padding:4.4% 5%;
 
 overflow-y:auto;
 
 text-align:left;
 
-font-size:12px;
+font-size:clamp(10px, 3.33cqi, 20px);
 line-height:1.45;
+overflow-x:hidden;
+overflow-wrap:anywhere;
 
 color:#263238;
 font-weight:normal;
@@ -1599,60 +1710,66 @@ box-shadow:none;
 }
 
 #feedbackText h3{
-margin:0 0 12px;
-padding-bottom:9px;
+margin:0 0 3.33cqi;
+padding-bottom:2.5cqi;
 border-bottom:1px solid #d7e4e2;
 color:#126b62;
-font-size:15px;
+font-size:clamp(12px, 4.17cqi, 24px);
 line-height:1.3;
 }
 
 #feedbackText b{
 display:inline-block;
-padding:3px 7px;
-border-radius:6px;
+max-width:100%;
+box-sizing:border-box;
+padding:.83cqi 1.94cqi;
+border-radius:1.67cqi;
+overflow-wrap:anywhere;
 background:#e9f4f2;
 color:#145c54;
 }
 
 #feedbackText b:last-of-type{
-font-size:16px;
+font-size:clamp(12px, 4.45cqi, 24px);
 line-height:1.2;
 
 }
 
 .frase1{
 position:absolute;
-top:270px;
-left:80px;
-width:210px;
+top:38.57%;
+left:22.22%;
+width:58.33%;
 box-sizing:border-box;
 color:black;
 
-font-size: 15px;
+font-size:clamp(12px, 4.17cqi, 24px);
+overflow-wrap:anywhere;
 
 }
 
 .frase2{
 position:absolute;
-top:405px;
-left:80px;
-width:210px;
+top:57.86%;
+left:22.22%;
+width:58.33%;
 box-sizing:border-box;
 color:black;
 
-font-size: 14px;
+font-size:clamp(11px, 3.89cqi, 22px);
+overflow-wrap:anywhere;
 }
 
 .frase3{
 position:absolute;
-top:490px;
-left:78px;
-width:210px;
+top:70%;
+left:21.67%;
+width:58.33%;
 box-sizing:border-box;
 color:black;
 
-font-size: 13.5px;
+font-size:clamp(11px, 3.75cqi, 21px);
+overflow-wrap:anywhere;
 }
 
 #whatsapp{
@@ -1671,11 +1788,11 @@ display:block;
 #checkBtn{
 position:absolute;
 
-top:630px;
-left:60px;
+top:90%;
+left:16.67%;
 
-width:240px;
-height:55px;
+width:66.67%;
+height:7.86%;
 
 background:transparent;
 opacity:0.5;
@@ -1688,10 +1805,10 @@ z-index:1000;
 
 #checkBtnOverlay{
 position:absolute;
-top:610px;
-left:20px;
-width:320px;
-height:80px;
+top:87.14%;
+left:5.56%;
+width:88.89%;
+height:11.43%;
 background:white;
 z-index:1001;
 pointer-events:none;
@@ -1699,18 +1816,19 @@ pointer-events:none;
 
 .mensajeNormal{
 position:absolute;
-top:180px;
-left:90px;
-width:220px;
+top:25.71%;
+left:25%;
+width:61.11%;
 color:black;
 
-font-size: 15px;
+font-size:clamp(12px, 4.17cqi, 24px);
+overflow-wrap:anywhere;
 }
 
 #errorRedFlags{
 position:absolute;
 
-top:20px;
+top:clamp(8px, 2vh, 20px);
 left:50%;
 
 transform:translateX(-50%);
@@ -1722,7 +1840,9 @@ padding:10px 15px;
 
 border-radius:10px;
 
-font-size:14px;
+width:min(520px, calc(100% - 32px));
+box-sizing:border-box;
+font-size:clamp(11px, 1.2vw, 14px);
 font-weight:bold;
 
 z-index:99999;
@@ -1739,7 +1859,7 @@ z-index:99999;
 
 #volverCasilleros .imgVolver{
 
-    width:90px;
+    width:clamp(50px, 6.5vw, 90px);
 
 }
 
@@ -1749,8 +1869,8 @@ z-index:99999;
 
     position:absolute;
 
-    top:20px;
-    left:20px;
+    top:clamp(10px, 2vh, 20px);
+    left:clamp(10px, 2vw, 20px);
 
     background:none;
 
@@ -2034,6 +2154,8 @@ z-index:99999;
 
 </button>
 
+    <div id="piecesPool"></div>
+
     <div id="gameContainer">
 
 <img
@@ -2049,6 +2171,10 @@ alt="Fondo">
 <div id="num2" class="number">7</div>
 <div id="num3" class="number">9</div>
 
+<div id="codigo">
+🔓 CÓDIGO: 479
+</div>
+
 <div id="pista1" class="pista">
     Comunicación por medios no institucionales
 </div>
@@ -2061,12 +2187,6 @@ alt="Fondo">
     Preferencia por ciertos alumnos
 </div>
 
-</div>
-
-<div id="piecesPool"></div>
-
-<div id="codigo">
-🔓 CÓDIGO: 479
 </div>
 
 </div>
@@ -2286,6 +2406,16 @@ Además, prefiero que nuestras conversaciones sean por privado 🙂
 
 </div>
 
+</div>
+
+<button
+    id="audioToggle"
+    type="button"
+    aria-label="Silenciar música y sonidos"
+    aria-pressed="true"
+    title="Silenciar música y sonidos"
+>♫</button>
+
 <script>
 
 let estado = {
@@ -2328,6 +2458,454 @@ document.getElementById("fade");
 
 const introPantalla =
 document.getElementById("intro");
+
+let audioContext = null;
+let masterAudioGain = null;
+let effectsAudioGain = null;
+let audioEnabled = true;
+let audioSupported = true;
+let audioMusicPending = false;
+let audioMusicFailed = false;
+let audioMode = "normal";
+let mazeMusicBus = null;
+let mazeMusicOscillators = [];
+let mazeMusicTimer = null;
+let mazeAccentIndex = 0;
+
+const audioToggle =
+document.getElementById("audioToggle");
+
+const backgroundMusic =
+new Audio(new URL("Juego.m4a",document.baseURI).href);
+
+backgroundMusic.loop = true;
+backgroundMusic.preload = "auto";
+backgroundMusic.volume = .32;
+
+const audioFrameIds = [
+    "frisoPuzzleFrame",
+    "computerPuzzleFrame",
+    "balancePuzzleFrame"
+];
+
+function updateAudioToggle(){
+
+    audioToggle.disabled = false;
+    audioToggle.textContent = audioEnabled ? "♫" : "×";
+    audioToggle.setAttribute(
+        "aria-label",
+        audioEnabled
+            ? "Silenciar música y sonidos"
+            : "Activar música y sonidos"
+    );
+    audioToggle.setAttribute("aria-pressed",String(audioEnabled));
+
+    if(audioMusicFailed && audioMode !== "maze"){
+        audioToggle.title =
+            "No se pudo reproducir Juego.m4a. Verifica que el archivo exista y sea compatible.";
+    }else if(!audioSupported){
+        audioToggle.title =
+            "La música está disponible, pero los efectos de sonido no lo están en este navegador.";
+    }else{
+        audioToggle.title = audioEnabled
+            ? "Silenciar música y sonidos"
+            : "Activar música y sonidos";
+    }
+
+}
+
+function ensureAudioContext(){
+
+    if(audioContext && audioContext.state !== "closed"){
+        return true;
+    }
+
+    const AudioContextConstructor =
+        window.AudioContext || window.webkitAudioContext;
+
+    if(!AudioContextConstructor){
+        audioSupported = false;
+        updateAudioToggle();
+        return false;
+    }
+
+    audioContext = new AudioContextConstructor();
+    masterAudioGain = audioContext.createGain();
+    masterAudioGain.gain.value = .62;
+    masterAudioGain.connect(audioContext.destination);
+
+    effectsAudioGain = audioContext.createGain();
+    effectsAudioGain.gain.value = .9;
+    effectsAudioGain.connect(masterAudioGain);
+
+    updateAudioToggle();
+    return true;
+
+}
+
+function changeMasterVolume(volume){
+
+    if(!audioContext || !masterAudioGain){
+        return;
+    }
+
+    const now = audioContext.currentTime;
+    masterAudioGain.gain.cancelScheduledValues(now);
+    masterAudioGain.gain.setTargetAtTime(volume,now,.06);
+
+}
+
+function reportMusicPlaybackError(error){
+
+    if(
+        error &&
+        error.name === "AbortError" &&
+        (!audioEnabled || audioMode === "maze")
+    ){
+        audioMusicPending = false;
+        return;
+    }
+
+    if(audioMusicFailed){
+        audioMusicPending = false;
+        return;
+    }
+
+    audioMusicPending = false;
+    audioMusicFailed = true;
+    console.error("No se pudo reproducir la música Juego.m4a.",error);
+    updateAudioToggle();
+
+}
+
+backgroundMusic.addEventListener("error",()=>{
+    reportMusicPlaybackError(backgroundMusic.error);
+});
+
+function startBackgroundMusic(){
+
+    if(
+        !audioEnabled ||
+        audioMode !== "normal" ||
+        audioMusicFailed ||
+        audioMusicPending ||
+        !backgroundMusic.paused
+    ){
+        return;
+    }
+
+    audioMusicPending = true;
+
+    try{
+        const playRequest = backgroundMusic.play();
+
+        if(playRequest && typeof playRequest.then === "function"){
+            playRequest.then(()=>{
+                audioMusicPending = false;
+                audioMusicFailed = false;
+                updateAudioToggle();
+            }).catch(reportMusicPlaybackError);
+        }else{
+            audioMusicPending = false;
+        }
+    }catch(error){
+        reportMusicPlaybackError(error);
+    }
+
+}
+
+const mazeAccentNotes = [233.08,311.13,261.63,349.23];
+
+function playMazeAccent(){
+
+    if(
+        !audioEnabled ||
+        audioMode !== "maze" ||
+        !audioContext ||
+        audioContext.state !== "running" ||
+        !mazeMusicBus
+    ){
+        return;
+    }
+
+    const now = audioContext.currentTime;
+    const frequency = mazeAccentNotes[mazeAccentIndex];
+    mazeAccentIndex = (mazeAccentIndex + 1) % mazeAccentNotes.length;
+
+    [
+        {frequency,volume:.14},
+        {frequency:frequency * 1.06,volume:.075}
+    ].forEach(note=>{
+        const oscillator = audioContext.createOscillator();
+        const noteGain = audioContext.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(note.frequency,now);
+        oscillator.frequency.exponentialRampToValueAtTime(
+            note.frequency * .97,
+            now + 1.7
+        );
+        noteGain.gain.setValueAtTime(.0001,now);
+        noteGain.gain.exponentialRampToValueAtTime(note.volume,now + .22);
+        noteGain.gain.exponentialRampToValueAtTime(.0001,now + 2.3);
+        oscillator.connect(noteGain);
+        noteGain.connect(mazeMusicBus);
+        oscillator.start(now);
+        oscillator.stop(now + 2.4);
+    });
+
+}
+
+function startMazeMusic(){
+
+    if(
+        !audioEnabled ||
+        audioMode !== "maze" ||
+        !audioContext ||
+        audioContext.state !== "running" ||
+        mazeMusicBus
+    ){
+        return;
+    }
+
+    const now = audioContext.currentTime;
+    const filter = audioContext.createBiquadFilter();
+    mazeMusicBus = audioContext.createGain();
+    mazeMusicBus.gain.setValueAtTime(.0001,now);
+    mazeMusicBus.gain.linearRampToValueAtTime(.84,now + 2.2);
+    mazeMusicBus.connect(masterAudioGain);
+
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(245,now);
+    filter.Q.setValueAtTime(1.4,now);
+    filter.connect(mazeMusicBus);
+
+    [
+        {frequency:55,type:"triangle",volume:.34,detune:-2},
+        {frequency:58.27,type:"sawtooth",volume:.09,detune:2},
+        {frequency:82.41,type:"sine",volume:.15,detune:-1}
+    ].forEach(layer=>{
+        const oscillator = audioContext.createOscillator();
+        const voiceGain = audioContext.createGain();
+
+        oscillator.type = layer.type;
+        oscillator.frequency.setValueAtTime(layer.frequency,now);
+        oscillator.detune.setValueAtTime(layer.detune,now);
+        voiceGain.gain.value = layer.volume;
+        oscillator.connect(voiceGain);
+        voiceGain.connect(filter);
+        oscillator.start(now);
+        mazeMusicOscillators.push(oscillator);
+    });
+
+    const wobble = audioContext.createOscillator();
+    const wobbleGain = audioContext.createGain();
+    wobble.frequency.setValueAtTime(.095,now);
+    wobbleGain.gain.value = 42;
+    wobble.connect(wobbleGain);
+    wobbleGain.connect(filter.frequency);
+    wobble.start(now);
+    mazeMusicOscillators.push(wobble);
+
+    playMazeAccent();
+    mazeMusicTimer = window.setInterval(playMazeAccent,5200);
+
+}
+
+function stopMazeMusic(){
+
+    if(mazeMusicTimer !== null){
+        window.clearInterval(mazeMusicTimer);
+        mazeMusicTimer = null;
+    }
+
+    if(!mazeMusicBus){
+        return;
+    }
+
+    const bus = mazeMusicBus;
+    mazeMusicBus = null;
+
+    if(audioContext && audioContext.state !== "closed"){
+        const now = audioContext.currentTime;
+        bus.gain.cancelScheduledValues(now);
+        bus.gain.setTargetAtTime(.0001,now,.08);
+        mazeMusicOscillators.forEach(oscillator=>{
+            oscillator.stop(now + .35);
+        });
+        window.setTimeout(()=>bus.disconnect(),500);
+    }else{
+        bus.disconnect();
+    }
+
+    mazeMusicOscillators = [];
+
+}
+
+function setAudioMode(mode){
+
+    const nextMode = mode === "maze" ? "maze" : "normal";
+
+    if(nextMode === audioMode){
+        return;
+    }
+
+    audioMode = nextMode;
+
+    if(audioMode === "maze"){
+        backgroundMusic.pause();
+        audioMusicPending = false;
+    }else{
+        stopMazeMusic();
+    }
+
+    updateAudioToggle();
+
+    if(audioEnabled){
+        activateAudio();
+    }
+
+}
+
+function activateAudio(){
+
+    if(!audioEnabled){
+        return;
+    }
+
+    if(audioMode === "maze"){
+        backgroundMusic.pause();
+        audioMusicPending = false;
+    }else{
+        startBackgroundMusic();
+    }
+
+    if(!ensureAudioContext()){
+        return;
+    }
+
+    if(audioContext.state === "running"){
+        startMazeMusic();
+        return;
+    }
+
+    audioContext.resume().then(()=>{
+        startMazeMusic();
+    }).catch(error=>{
+        audioSupported = false;
+        console.error("No se pudieron iniciar los efectos de sonido.",error);
+        updateAudioToggle();
+    });
+
+}
+
+function playUiSound(isObject){
+
+    if(
+        !audioEnabled ||
+        !ensureAudioContext() ||
+        !effectsAudioGain
+    ){
+        return;
+    }
+
+    const now = audioContext.currentTime;
+    const tones = isObject
+        ? [
+            {frequency:520,delay:0,volume:.22,duration:.16},
+            {frequency:780,delay:.055,volume:.14,duration:.2}
+        ]
+        : [
+            {frequency:560,delay:0,volume:.22,duration:.1}
+        ];
+
+    tones.forEach(note=>{
+        const start = now + note.delay;
+        const oscillator = audioContext.createOscillator();
+        const noteGain = audioContext.createGain();
+
+        oscillator.type = isObject ? "sine" : "triangle";
+        oscillator.frequency.setValueAtTime(note.frequency,start);
+        oscillator.frequency.exponentialRampToValueAtTime(
+            note.frequency * (isObject ? 1.18 : .78),
+            start + note.duration * .65
+        );
+        noteGain.gain.setValueAtTime(.0001,start);
+        noteGain.gain.exponentialRampToValueAtTime(note.volume,start + .012);
+        noteGain.gain.exponentialRampToValueAtTime(
+            .0001,
+            start + note.duration
+        );
+        oscillator.connect(noteGain);
+        noteGain.connect(effectsAudioGain);
+        oscillator.start(start);
+        oscillator.stop(start + note.duration + .01);
+    });
+
+}
+
+audioToggle.addEventListener("click",()=>{
+
+    if(audioEnabled){
+        audioEnabled = false;
+        backgroundMusic.pause();
+        stopMazeMusic();
+        changeMasterVolume(.0001);
+        updateAudioToggle();
+        return;
+    }
+
+    audioEnabled = true;
+    audioMusicFailed = false;
+    changeMasterVolume(.62);
+    updateAudioToggle();
+    activateAudio();
+    playUiSound(false);
+
+});
+
+updateAudioToggle();
+
+const audioClickableSelector =
+    "button, [role='button'], .piece, .phrase, .passCell, .cell, .pieza, " +
+    "#escritorioHover, #casilleroHover, #frisoHoverArea";
+
+const audioObjectSelector =
+    ".objetoRecogible, .objetoCertificado, .objetoEstatua, .objetoMedalla, " +
+    "#tijerasBtn, .piece, .phrase, .pieza, .slotInventario img";
+
+document.addEventListener("click",event=>{
+    const clickedElement = event.target instanceof Element
+        ? event.target.closest(audioClickableSelector)
+        : null;
+
+    if(!clickedElement || clickedElement.id === "audioToggle"){
+        return;
+    }
+
+    activateAudio();
+    playUiSound(clickedElement.matches(audioObjectSelector));
+},true);
+
+window.addEventListener("message",event=>{
+
+    if(!event.data || event.data.type !== "game-audio-request"){
+        return;
+    }
+
+    const fromGameFrame = audioFrameIds.some(frameId=>{
+        const frame = document.getElementById(frameId);
+        return frame && frame.contentWindow === event.source;
+    });
+
+    if(!fromGameFrame){
+        return;
+    }
+
+    activateAudio();
+    playUiSound(event.data.sound === "object");
+
+});
 
 document
 .getElementById("btnJugar")
@@ -2462,6 +3040,16 @@ function animarObjetoAlInventario(imagen, origen, inicio, indice){
         return;
     }
 
+    const espacioInventario =
+        document.querySelectorAll(".slotInventario")[indice];
+    const imagenEnInventario = espacioInventario
+        ? espacioInventario.querySelector("img")
+        : null;
+
+    if(imagenEnInventario){
+        imagenEnInventario.style.visibility = "hidden";
+    }
+
     const objetoAnimado = document.createElement("img");
     objetoAnimado.src = imagen;
     objetoAnimado.className = "objeto-recogido-animacion";
@@ -2489,6 +3077,9 @@ function animarObjetoAlInventario(imagen, origen, inicio, indice){
         objetoAnimado.style.opacity = "0";
 
         setTimeout(()=>{
+            if(imagenEnInventario){
+                imagenEnInventario.style.visibility = "";
+            }
             objetoAnimado.remove();
         },700);
     },850);
@@ -2650,6 +3241,7 @@ botonSiguiente.addEventListener(
     .style.display = "block";
 
     mostrarPared();
+    abrirAcertijo1();
 
     }
 
@@ -2879,17 +3471,19 @@ function ajustarAcertijoFriso(){
         return;
     }
 
-    const scale = Math.max(
-        window.innerWidth / baseFriso.naturalWidth,
-        window.innerHeight / baseFriso.naturalHeight
+    const renderedWidth = Math.min(
+        window.innerWidth,
+        window.innerHeight * (16 / 9)
     );
-    const renderedWidth = baseFriso.naturalWidth * scale;
-    const renderedHeight = baseFriso.naturalHeight * scale;
+    const renderedHeight = Math.min(
+        window.innerHeight,
+        window.innerWidth * (9 / 16)
+    );
     const medidas = {
         renderedWidth,
         renderedHeight,
-        offsetX: (window.innerWidth - renderedWidth) / 2,
-        offsetY: (window.innerHeight - renderedHeight) / 2
+        offsetX: 0,
+        offsetY: 0
     };
 
     ubicarEnFriso(frisoHoverArea, {
@@ -2924,14 +3518,6 @@ function ajustarEscalaAcertijoFriso(){
     const height = frisoPuzzleOverlay.clientHeight;
 
     if(!width || !height){
-        return;
-    }
-
-    if(frisoPuzzleOverlay.classList.contains("fullscreen")){
-        frisoPuzzleFrame.style.left="0";
-        frisoPuzzleFrame.style.top="0";
-        frisoPuzzleFrame.style.transform =
-            `scale(${width / 1920},${height / 1080})`;
         return;
     }
 
@@ -3147,9 +3733,24 @@ document
 .getElementById("backComputerPuzzle")
 .addEventListener("click",()=>{
 
+    setAudioMode("normal");
     computerPuzzleOverlay.style.display="none";
     computerPuzzleOverlay.setAttribute("aria-hidden","true");
     mostrarBotonInventario();
+
+});
+
+window.addEventListener("message",event=>{
+
+    if(
+        event.source !== document.getElementById("computerPuzzleFrame").contentWindow ||
+        !event.data ||
+        event.data.type !== "game-audio-mode"
+    ){
+        return;
+    }
+
+    setAudioMode(event.data.mode);
 
 });
 
@@ -3193,6 +3794,7 @@ window.addEventListener("message",(event)=>{
         return;
     }
 
+    setAudioMode("normal");
     computerPuzzleOverlay.style.display="none";
     computerPuzzleOverlay.setAttribute("aria-hidden","true");
     mostrarBotonInventario();
@@ -3382,20 +3984,22 @@ hitboxCasilleros.addEventListener(
 
 /* ENTRAR ESCRITORIO */
 
-hitbox.addEventListener("click",()=>{
+function abrirAcertijo1(){
 
     ocultarInventarioAlEntrarAcertijo();
 
-    document.getElementById("acertijo1")
-    .style.display="block";
+    document.getElementById("acertijo1").style.display="block";
 
     paredes[paredActual].style.display="none";
 
-    document.getElementById("izq")
-    .style.display="none";
+    document.getElementById("izq").style.display="none";
 
-    document.getElementById("der")
-    .style.display="none";
+    document.getElementById("der").style.display="none";
+
+}
+
+hitbox.addEventListener("click",()=>{
+    abrirAcertijo1();
 
 });
 
@@ -3467,34 +4071,22 @@ const puzzles = [
 {
 board:"board1",
 number:"num1",
-frases:[
-"¿No les parece raro",
-"que sea la única",
-"clase con grupo",
-"de WhatsApp?"
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-3-whatsapp.png",
+crop:{x:244,y:129,width:1180,height:910}
 },
 
 {
 board:"board2",
 number:"num2",
-frases:[
-"No lo sé, pero",
-"me regaló un sándwich.",
-"¡Qué buena",
-"onda!"
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-2-snadwich.png",
+crop:{x:241,y:113,width:1204,height:944}
 },
 
 {
 board:"board3",
 number:"num3",
-frases:[
-"Me dio la impresión",
-"de que tiene",
-"preferencia por",
-"las alumnas."
-]
+image:"https://raw.githubusercontent.com/marystar102-rgb/Dise-o-interactivo-IV/main/Assets_scaperoom/Bocetos/puzzle1-dialogos/globo-3-preferencia-alumnas-pensamientos.png",
+crop:{x:242,y:66,width:1240,height:1092}
 }
 
 ];
@@ -3531,11 +4123,23 @@ slot.addEventListener("drop",e=>{
 
 e.preventDefault();
 
+if(board.classList.contains("completado")){
+return;
+}
+
 const id=e.dataTransfer.getData("pieza");
 
 const pieza=document.getElementById(id);
 
+if(!pieza || !pieza.classList.contains("piece")){
+return;
+}
+
 const origen=pieza.parentElement;
+
+if(!origen){
+return;
+}
 
 if(slot.children.length===0){
 
@@ -3551,7 +4155,7 @@ slot.appendChild(pieza);
 
 }
 
-revisarPuzzle(puzzle);
+revisarPuzzle(puzzle,index);
 
 });
 
@@ -3563,8 +4167,9 @@ let piezas=[];
 for(let i=0;i<4;i++){
 
 piezas.push({
-texto:puzzle.frases[i],
-correcta:i
+correcta:i,
+columna:i%2,
+fila:Math.floor(i/2)
 });
 
 }
@@ -3577,13 +4182,34 @@ const div=document.createElement("div");
 
 div.className="piece";
 
-div.textContent=pieza.texto;
-
 div.draggable=true;
 
 div.dataset.correct=pieza.correcta;
+div.dataset.puzzle=index;
 
 div.id="pieza_"+index+"_"+pieza.correcta;
+div.setAttribute("aria-label","Pieza "+(pieza.correcta+1)+" del diálogo");
+
+const anchoImagen=1747;
+const altoImagen=2030;
+const escalaX=2*anchoImagen/puzzle.crop.width;
+const escalaY=2*altoImagen/puzzle.crop.height;
+const posicionX=100*(
+    (puzzle.crop.x/anchoImagen)*escalaX+pieza.columna
+)/(escalaX-1);
+const posicionY=100*(
+    (puzzle.crop.y/altoImagen)*escalaY+pieza.fila
+)/(escalaY-1);
+
+div.style.backgroundImage='url("'+puzzle.image+'")';
+div.style.setProperty(
+    "--puzzle-background-size",
+    (escalaX*100)+"% "+(escalaY*100)+"%"
+);
+div.style.setProperty(
+    "--puzzle-background-position",
+    posicionX+"% "+posicionY+"%"
+);
 
 div.addEventListener("dragstart",e=>{
 
@@ -3602,39 +4228,40 @@ document
 
 }
 
-function revisarPuzzle(puzzle){
+function revisarPuzzle(puzzle,index){
 
-const slots=document.querySelectorAll(
-"#"+puzzle.board+" .slot"
-);
+const board=document.getElementById(puzzle.board);
+const slots=board.querySelectorAll(".slot");
 
-let correcto=true;
+const correcto=Array.from(slots).every((slot,pos)=>{
 
-slots.forEach((slot,pos)=>{
+const pieza=slot.firstElementChild;
 
-if(slot.children.length===0){
-
-correcto=false;
-return;
-}
-
-const pieza=slot.children[0];
-
-if(Number(pieza.dataset.correct)!==pos){
-
-correcto=false;
-}
+return pieza &&
+    Number(pieza.dataset.puzzle)===index &&
+    Number(pieza.dataset.correct)===pos;
 
 });
 
-if(correcto){
-
-document.getElementById(
-puzzle.number
-).style.display="block";
-
-comprobarFinal();
+if(!correcto){
+return;
 }
+
+const imagenCompleta=document.createElement("img");
+imagenCompleta.className="puzzle-complete";
+imagenCompleta.src=puzzle.image;
+imagenCompleta.alt="Diálogo completo";
+imagenCompleta.draggable=false;
+imagenCompleta.style.width=(1747/puzzle.crop.width*100)+"%";
+imagenCompleta.style.height=(2030/puzzle.crop.height*100)+"%";
+imagenCompleta.style.left=-(puzzle.crop.x/puzzle.crop.width*100)+"%";
+imagenCompleta.style.top=-(puzzle.crop.y/puzzle.crop.height*100)+"%";
+
+board.classList.add("completado");
+board.replaceChildren(imagenCompleta);
+
+document.getElementById(puzzle.number).style.display="block";
+comprobarFinal();
 
 }
 
@@ -3671,7 +4298,9 @@ const id=e.dataTransfer.getData("pieza");
 
 const pieza=document.getElementById(id);
 
+if(pieza && pieza.classList.contains("piece")){
 pool.appendChild(pieza);
+}
 
 });
 
